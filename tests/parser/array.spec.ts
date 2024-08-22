@@ -76,7 +76,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -108,7 +107,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -164,7 +162,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -254,7 +251,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -268,7 +264,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -285,7 +280,6 @@ test.group('Parser | Array', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -351,7 +345,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -383,7 +376,6 @@ test.group('Parser | Array', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -468,6 +460,123 @@ test.group('Parser | Array', () => {
         },
         {
           "size": 4,
+          "type": "array-end",
+        },
+      ]
+    `)
+  })
+
+  test('tokenize custom collections extending arrays', ({ expect }) => {
+    const parser = new Parser({ inspectArrayPrototype: true })
+
+    class Collection<T> extends Array<T> {
+      items: T[] = []
+      constructor(...items: T[]) {
+        super(...items)
+        this.items = items
+      }
+
+      first() {
+        this.items[0]
+      }
+
+      last() {
+        this.items[this.items.length - 1]
+      }
+    }
+
+    const collection = new Collection(1, 2, 3)
+    parser.parse(collection)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "name": "Collection",
+          "size": 3,
+          "type": "array-start",
+        },
+        {
+          "index": 0,
+          "type": "array-value-start",
+        },
+        {
+          "type": "number",
+          "value": 1,
+        },
+        {
+          "index": 0,
+          "type": "array-value-end",
+        },
+        {
+          "index": 1,
+          "type": "array-value-start",
+        },
+        {
+          "type": "number",
+          "value": 2,
+        },
+        {
+          "index": 1,
+          "type": "array-value-end",
+        },
+        {
+          "index": 2,
+          "type": "array-value-start",
+        },
+        {
+          "type": "number",
+          "value": 3,
+        },
+        {
+          "index": 2,
+          "type": "array-value-end",
+        },
+        {
+          "type": "prototype-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "first",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "first",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "last",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "last",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-end",
+        },
+        {
+          "size": 3,
           "type": "array-end",
         },
       ]

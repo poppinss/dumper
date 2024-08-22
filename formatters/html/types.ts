@@ -70,6 +70,12 @@ export type HTMLPrinterStyles = {
   arrayLabel: string
 
   /**
+   * Styles for the Prototype properties object label
+   * and opening/closing curly braces
+   */
+  prototypeLabel: string
+
+  /**
    * Styles for the Map label and opening/closing
    * curly braces
    */

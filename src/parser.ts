@@ -51,6 +51,7 @@ export class Parser {
       showHidden: false,
       depth: 5,
       inspectObjectPrototype: false,
+      inspectArrayPrototype: false,
       inspectStaticMembers: false,
       maxArrayLength: 100,
       maxStringLength: 1000,

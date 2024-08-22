@@ -14,6 +14,7 @@ import { HTMLFormatter } from '../formatters/html/main.js'
 const parser = new Parser({
   inspectStaticMembers: true,
   inspectObjectPrototype: true,
+  inspectArrayPrototype: true,
 })
 parser.parse(obj)
 

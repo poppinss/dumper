@@ -99,7 +99,7 @@ export const HTMLPrinters: TokenPrinters = {
   'array-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.arrayLabel
-    const label = `Array:${token.size} [`
+    const label = `${token.name}:${token.size} [`
 
     return (
       '<span class="dumper-group dumper-array-group">' +
@@ -157,6 +157,29 @@ export const HTMLPrinters: TokenPrinters = {
 
     const label = itemsLeft === 1 ? `1 more item` : `${itemsLeft} more items`
     return `${indent}<span style="${styles}">[...${label}]</span>`
+  },
+
+  'prototype-start': (_, formatter) => {
+    const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
+    formatter.indentation.increment()
+    const styles = formatter.styles.prototypeLabel
+    const label = '[[Prototype]] {'
+
+    return (
+      indent +
+      '<span class="dumper-group dumper-prototype-group">' +
+      `<span style="${styles}">${label}</span>` +
+      `<button class="dumper-toggle"><span>${dropdownIcon}</span></button>` +
+      '<samp>'
+    )
+  },
+
+  'prototype-end': (_, formatter) => {
+    formatter.indentation.decrement()
+    const styles = formatter.styles.prototypeLabel
+    const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
+
+    return indent + '</samp>' + `<span style="${styles}">}</span>` + '</span>'
   },
 
   'map-start': (token, formatter) => {

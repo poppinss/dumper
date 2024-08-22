@@ -1,7 +1,7 @@
 {
   "name": "@poppinss/dumper",
   "version": "0.0.0",
-  "description": "Pretty print JavaScript data-types in the terminal and the browser",
+  "description": "Pretty print JavaScript data types in the terminal and the browser",
   "main": "build/index.js",
   "type": "module",
   "scripts": {

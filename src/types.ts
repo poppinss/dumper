@@ -38,7 +38,6 @@ export type TokensMap = {
   'object-key': {
     isWritable: boolean
     isSymbol: boolean
-    isOwnKey: boolean
     value: string
   }
   'object-value-start': {}
@@ -73,6 +72,12 @@ export type TokensMap = {
     limit: number
     size: number
   }
+
+  /**
+   * Boundary for the prototype properties
+   */
+  'prototype-start': {}
+  'prototype-end': {}
 
   /**
    * Set tokens
@@ -160,6 +165,10 @@ export type TokensMap = {
     isAsync: boolean
     isClass: boolean
   }
+
+  /**
+   * Boundary for the static members
+   */
   'static-members-start': {}
   'static-members-end': {}
 
@@ -214,24 +223,32 @@ export type ParserConfig = {
 
   /**
    * The depth at which to stop parsing nested values. The depth
-   * is shared among all tree like data-structures.
+   * is shared among all tree like data structures.
    *
    * Defaults to 5
    */
   depth?: number
 
   /**
-   * Should the prototype properties of an object be inspected as-well
-   * This can be helpful with classes to view inherited properties.
+   * Inspect prototype properties of an object. The non-enumerable properties
+   * of prototype are included by default.
    *
    * Defaults to false
    */
   inspectObjectPrototype?: boolean
 
   /**
-   * Should the static members of a class be inspected. Even though
-   * functions and classes are technically same, this config only
-   * applies to functions defined using the [class] keyword.
+   * Inspect prototype properties of an array. The non-enumerable properties
+   * of prototype are included by default.
+   *
+   * Defaults to false
+   */
+  inspectArrayPrototype?: boolean
+
+  /**
+   * Inspect static members of a class. Even though functions and classes are
+   * technically same, this config only applies to functions defined using
+   * the [class] keyword.
    *
    * Defaults to false
    */
@@ -245,7 +262,7 @@ export type ParserConfig = {
   maxArrayLength?: number
 
   /**
-   * Maximum number of characters to display inside a string.
+   * Maximum number of characters to display for a string.
    *
    * Defaults to 1000
    */

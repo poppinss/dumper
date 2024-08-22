@@ -93,7 +93,6 @@ test.group('Parser', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -110,7 +109,6 @@ test.group('Parser', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",

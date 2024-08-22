@@ -160,7 +160,6 @@ test.group('Parser | Map', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -278,7 +277,6 @@ test.group('Parser | Map', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -292,7 +290,6 @@ test.group('Parser | Map', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",

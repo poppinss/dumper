@@ -27,7 +27,6 @@ test.group('Parser | Error', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -46,7 +45,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -85,7 +83,6 @@ test.group('Parser | Error', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -97,14 +94,13 @@ test.group('Parser | Error', () => {
         {
           "type": "string",
           "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:74:19)\\\\n' +
+        '    at Object.executor (${FILE_PATH}:72:19)\\\\n' +
         '    at TestRunner.#runTest '... 952 more characters",
         },
         {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -121,7 +117,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -138,7 +133,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -155,7 +149,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -196,7 +189,6 @@ test.group('Parser | Error', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -208,14 +200,13 @@ test.group('Parser | Error', () => {
         {
           "type": "string",
           "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:184:19)\\\\n' +
+        '    at Object.executor (${FILE_PATH}:177:19)\\\\n' +
         '    at TestRunner.#runTest'... 953 more characters",
         },
         {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -232,7 +223,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -246,7 +236,6 @@ test.group('Parser | Error', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -258,14 +247,13 @@ test.group('Parser | Error', () => {
         {
           "type": "string",
           "value": "'Error: Fatal error\\\\n' +
-        '    at Object.executor (${FILE_PATH}:183:19)\\\\n' +
+        '    at Object.executor (${FILE_PATH}:176:19)\\\\n' +
         '    at TestRunner.#runTest (/Users/virk'... 940 more characters",
         },
         {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -288,7 +276,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -305,7 +292,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -322,7 +308,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -362,7 +347,6 @@ test.group('Parser | Error', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -374,14 +358,13 @@ test.group('Parser | Error', () => {
         {
           "type": "string",
           "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:350:19)\\\\n' +
+        '    at Object.executor (${FILE_PATH}:335:19)\\\\n' +
         '    at TestRunner.#runTest'... 953 more characters",
         },
         {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -398,7 +381,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -415,7 +397,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -432,7 +413,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -449,7 +429,6 @@ test.group('Parser | Error', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",

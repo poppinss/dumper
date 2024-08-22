@@ -36,7 +36,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -53,7 +52,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -70,7 +68,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -87,7 +84,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -104,7 +100,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -121,7 +116,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -137,7 +131,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -154,7 +147,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -170,7 +162,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -186,7 +177,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": true,
           "isWritable": true,
           "type": "object-key",
@@ -231,7 +221,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -245,7 +234,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -262,7 +250,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -276,7 +263,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -293,7 +279,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -345,7 +330,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -386,7 +370,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -403,7 +386,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": false,
           "type": "object-key",
@@ -446,7 +428,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -463,7 +444,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": false,
           "type": "object-key",
@@ -499,7 +479,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -516,7 +495,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -530,7 +508,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -547,7 +524,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -592,7 +568,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -609,7 +584,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -652,7 +626,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -669,7 +642,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -717,7 +689,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -734,7 +705,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -751,7 +721,9 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": false,
+          "type": "prototype-start",
+        },
+        {
           "isSymbol": false,
           "isWritable": false,
           "type": "object-key",
@@ -761,7 +733,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-getter",
         },
         {
-          "isOwnKey": false,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -781,6 +752,9 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
+          "type": "prototype-end",
+        },
+        {
           "type": "object-end",
         },
       ]
@@ -798,7 +772,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -815,7 +788,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -832,7 +804,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -849,7 +820,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -866,7 +836,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -883,7 +852,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -900,7 +868,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -917,7 +884,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -934,7 +900,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -951,7 +916,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -968,7 +932,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -988,7 +951,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1022,7 +984,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1039,7 +1000,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1056,7 +1016,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1073,7 +1032,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1090,7 +1048,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1107,7 +1064,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1124,7 +1080,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1141,7 +1096,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1158,7 +1112,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1175,7 +1128,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1192,7 +1144,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1206,7 +1157,6 @@ test.group('Parser | Object', () => {
           "type": "object-start",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",
@@ -1229,7 +1179,6 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
-          "isOwnKey": true,
           "isSymbol": false,
           "isWritable": true,
           "type": "object-key",

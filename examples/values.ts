@@ -51,6 +51,22 @@ middleware.set({ name: 'auth', type: 'global' }, { fn: () => {} })
 middleware.set({ name: 'bouncer', type: 'router' }, { fn: () => {} })
 middleware.set({ name: 'assets', type: 'server' }, { fn: () => {} })
 
+class Collection<T> extends Array<T> {
+  items: T[] = []
+  constructor(...items: T[]) {
+    super(...items)
+    this.items = items
+  }
+
+  first() {
+    this.items[0]
+  }
+
+  last() {
+    this.items[this.items.length - 1]
+  }
+}
+
 class Model {
   constructor() {
     return new Proxy(this, {
@@ -58,6 +74,8 @@ class Model {
     })
   }
 }
+
+const collection = new Collection(new User())
 
 export const obj = {
   'a': 1,
@@ -75,6 +93,7 @@ export const obj = {
     buf: Buffer.from('abc'),
     holes: holes,
   },
+  collection,
   hooks,
   'model': new Model(),
   'balance': BigInt(100),
