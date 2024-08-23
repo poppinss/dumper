@@ -17,10 +17,10 @@ import type { HTMLFormatterConfig, HTMLPrinterStyles } from './types.js'
  * https://github.com/ai/nanoid/blob/main/nanoid.js
  */
 const seed = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
-export let nanoid = (e = 21) => {
+export let nanoid = (length = 15) => {
   let output = ''
-  const random = crypto.getRandomValues(new Uint8Array(e))
-  for (let n = 0; n < e; n++) {
+  const random = crypto.getRandomValues(new Uint8Array(length))
+  for (let n = 0; n < length; n++) {
     output += seed[63 & random[n]]
   }
   return output
@@ -104,10 +104,10 @@ export class HTMLFormatter {
     const id = nanoid()
     const nonce = this.#cspNonce ? ` nonce="${this.#cspNonce}"` : ''
     return (
-      `<div id="${id}" class="dumper-dump">` +
+      `<div id="dump-${id}" class="dumper-dump">` +
       `<pre style="${this.styles.pre}"><code>${code}</code></pre>` +
       `<script${nonce}>dumperActivate('${id}')</script>` +
-      '<div>'
+      '</div>'
     )
   }
 
