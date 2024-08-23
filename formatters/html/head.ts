@@ -21,8 +21,10 @@ export function createStyleSheet() {
   text-overflow: ellipsis;
   padding: 0 10px;
 }
-.dumper-dump pre {
+.dumper-dump pre, .dumper-dump code {
   font-family: Menlo, Monaco, Consolas, monospace;
+}
+.dumper-dump pre {
   line-height: 24px;
   font-size: 15px;
   overflow-x: scroll;
@@ -43,6 +45,8 @@ export function createStyleSheet() {
 }
 .dumper-dump .dumper-toggle span {
   display: inline-block;
+  position: relative;
+  top: 3px;
 }
 .dumper-dump .dumper-toggle[aria-expanded="true"] span {
   transform: rotate(90deg);
