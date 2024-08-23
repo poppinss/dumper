@@ -8,10 +8,10 @@
  */
 
 import { test } from '@japa/runner'
-import { Exception } from '@poppinss/utils'
+import { Exception, getFilename } from '@poppinss/utils'
 import { Parser } from '../../src/parser.js'
 
-const FILE_PATH = import.meta.filename
+const FILE_PATH = getFilename(import.meta.url)
 
 test.group('Parser | Error', () => {
   test('tokenize error', ({ expect }) => {
