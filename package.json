@@ -72,7 +72,8 @@
     "target": "esnext"
   },
   "publishConfig": {
-    "provenance": true
+    "provenance": true,
+    "access": "public"
   },
   "release-it": {
     "git": {
