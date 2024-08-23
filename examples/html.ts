@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { dump } from '../formatters/html/main.js'
+import { dump, themes } from '../formatters/html/main.js'
 import { obj } from './values.js'
 
-console.log(dump(obj))
+console.log(dump(obj, { styles: themes.minLight }))

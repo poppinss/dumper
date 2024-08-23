@@ -101,10 +101,10 @@ export class HTMLFormatter {
    * to activate the frontend iteractions.
    */
   #wrapOutput(code: string) {
-    const id = nanoid()
+    const id = `dump-${nanoid()}`
     const nonce = this.#cspNonce ? ` nonce="${this.#cspNonce}"` : ''
     return (
-      `<div id="dump-${id}" class="dumper-dump">` +
+      `<div id="${id}" class="dumper-dump">` +
       `<pre style="${this.styles.pre}"><code>${code}</code></pre>` +
       `<script${nonce}>dumperActivate('${id}')</script>` +
       '</div>'
