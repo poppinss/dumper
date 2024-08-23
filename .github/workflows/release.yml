@@ -4,7 +4,7 @@ permissions:
   id-token: write
 jobs:
   checks:
-    uses: ./checks.yml@$GITHUB_REF_NAME
+    uses: .github/workflows/checks.yml@$GITHUB_REF_NAME
   release:
     runs-on: ubuntu-latest
     steps:
