@@ -8,10 +8,9 @@
  */
 
 import { test } from '@japa/runner'
-import { Exception, getFilename } from '@poppinss/utils'
-import { Parser } from '../../src/parser.js'
+import { Exception } from '@poppinss/utils'
 
-const FILE_PATH = getFilename(import.meta.url)
+import { Parser } from '../../src/parser.js'
 
 test.group('Parser | Error', () => {
   test('tokenize error', ({ expect }) => {
@@ -19,8 +18,17 @@ test.group('Parser | Error', () => {
     const error = new Error('Something went wrong')
 
     parser.parse(error)
+    const tokens = parser.flush()
+    const errorStack = tokens.splice(3, 1)
 
-    expect(parser.flush()).toMatchInlineSnapshot(`
+    expect(errorStack).toEqual([
+      {
+        type: 'string',
+        value: expect.any(String),
+      },
+    ])
+
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "constructorName": "Error",
@@ -34,12 +42,6 @@ test.group('Parser | Error', () => {
         },
         {
           "type": "object-value-start",
-        },
-        {
-          "type": "string",
-          "value": "'Error: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:19:19)\\\\n' +
-        '    at TestRunner.#runTest (/Us'... 948 more characters",
         },
         {
           "type": "object-value-end",
@@ -75,8 +77,17 @@ test.group('Parser | Error', () => {
     })
 
     parser.parse(error)
+    const tokens = parser.flush()
+    const errorStack = tokens.splice(3, 1)
 
-    expect(parser.flush()).toMatchInlineSnapshot(`
+    expect(errorStack).toEqual([
+      {
+        type: 'string',
+        value: expect.any(String),
+      },
+    ])
+
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "constructorName": "Exception",
@@ -90,12 +101,6 @@ test.group('Parser | Error', () => {
         },
         {
           "type": "object-value-start",
-        },
-        {
-          "type": "string",
-          "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:72:19)\\\\n' +
-        '    at TestRunner.#runTest '... 952 more characters",
         },
         {
           "type": "object-value-end",
@@ -181,8 +186,24 @@ test.group('Parser | Error', () => {
     })
 
     parser.parse(error)
+    const tokens = parser.flush()
+    const errorStack = tokens.splice(3, 1)
+    const causeStack = tokens.splice(13, 1)
 
-    expect(parser.flush()).toMatchInlineSnapshot(`
+    expect(errorStack).toEqual([
+      {
+        type: 'string',
+        value: expect.any(String),
+      },
+    ])
+    expect(causeStack).toEqual([
+      {
+        type: 'string',
+        value: expect.any(String),
+      },
+    ])
+
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "constructorName": "Exception",
@@ -196,12 +217,6 @@ test.group('Parser | Error', () => {
         },
         {
           "type": "object-value-start",
-        },
-        {
-          "type": "string",
-          "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:177:19)\\\\n' +
-        '    at TestRunner.#runTest'... 953 more characters",
         },
         {
           "type": "object-value-end",
@@ -243,12 +258,6 @@ test.group('Parser | Error', () => {
         },
         {
           "type": "object-value-start",
-        },
-        {
-          "type": "string",
-          "value": "'Error: Fatal error\\\\n' +
-        '    at Object.executor (${FILE_PATH}:176:19)\\\\n' +
-        '    at TestRunner.#runTest (/Users/virk'... 940 more characters",
         },
         {
           "type": "object-value-end",
@@ -339,8 +348,17 @@ test.group('Parser | Error', () => {
     error.cause = error
 
     parser.parse(error)
+    const tokens = parser.flush()
+    const errorStack = tokens.splice(3, 1)
 
-    expect(parser.flush()).toMatchInlineSnapshot(`
+    expect(errorStack).toEqual([
+      {
+        type: 'string',
+        value: expect.any(String),
+      },
+    ])
+
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "constructorName": "Exception",
@@ -354,12 +372,6 @@ test.group('Parser | Error', () => {
         },
         {
           "type": "object-value-start",
-        },
-        {
-          "type": "string",
-          "value": "'Exception: Something went wrong\\\\n' +
-        '    at Object.executor (${FILE_PATH}:335:19)\\\\n' +
-        '    at TestRunner.#runTest'... 953 more characters",
         },
         {
           "type": "object-value-end",
