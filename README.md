@@ -12,7 +12,7 @@ Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#uti
 Install the package from the npm registry as follows.
 
 ```sh
-npm i @poppinss/dumper
+npm i @poppinss/dumper@beta
 ```
 
 ## HTML formatter
@@ -34,7 +34,7 @@ const html = dump(values)
 // Write HTML in response
 ```
 
-## CLI formatter
+## CLI formatter (not available yet)
 
 You can dump values to the terminal using the `dump` helper for the cli sub-module. For example:
 
@@ -53,7 +53,7 @@ const ansiOutput = dump(values)
 console.log(ansiOutput)
 ```
 
-## Support data types
+## Supported data types
 
 Following is the list of data types supported by Dumper. All other data types will be converted to their String representation by wrapping them inside the `String` function.
 
