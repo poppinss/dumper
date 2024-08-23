@@ -3,11 +3,13 @@
  * of the document
  */
 export function createStyleSheet() {
-  return `.dumper-dump {
+  return `.dumper-dump, .dumper-dump pre, .dumper-dump code, .dumper-dump samp {
+  font-family: Menlo, Monaco, Consolas, monospace;
+}
+.dumper-dump {
   padding: 4px;
   border-radius: 4px;
   font-size: 13px;
-  font-family: Menlo, Monaco, Consolas, monospace;
 }
 .dumper-dump .dumper-head {
   display: flex;
@@ -20,9 +22,6 @@ export function createStyleSheet() {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 10px;
-}
-.dumper-dump pre, .dumper-dump code {
-  font-family: Menlo, Monaco, Consolas, monospace;
 }
 .dumper-dump pre {
   line-height: 24px;

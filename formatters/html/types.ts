@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import type { TokensMap } from '../../src/types.js'
+import type { ParserConfig, TokensMap } from '../../src/types.js'
 import type { HTMLFormatter } from './main.js'
 
 /**
@@ -163,3 +163,9 @@ export type HTMLFormatterConfig = {
     }
   }
 }
+
+/**
+ * Configuration accepted by the "dump" method exported
+ * by the html sub-module.
+ */
+export type HTMLDumpConfig = ParserConfig & HTMLFormatterConfig

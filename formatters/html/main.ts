@@ -7,14 +7,14 @@
  * file that was distributed with this source code.
  */
 
+import { Parser } from '../../src/parser.js'
+import { HTMLFormatter } from './formatter.js'
+import type { HTMLDumpConfig } from './types.js'
+
 export * from './head.js'
 export { themes } from './themes.js'
 export * as helpers from './helpers.js'
-import { Parser } from '../../src/parser.js'
-import { HTMLFormatter } from './formatter.js'
 export { HTMLFormatter } from './formatter.js'
-import { HTMLFormatterConfig } from './types.js'
-import { ParserConfig } from '../../src/types.js'
 export { HTMLPrinters } from './printers/main.js'
 
 /**
@@ -40,7 +40,7 @@ export { HTMLPrinters } from './printers/main.js'
  * })
  * ```
  */
-export function dump(value: any, config?: ParserConfig & HTMLFormatterConfig) {
+export function dump(value: any, config?: HTMLDumpConfig) {
   const parser = new Parser(config)
   parser.parse(value)
   return new HTMLFormatter(config).format(parser.flush())
