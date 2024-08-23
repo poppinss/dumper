@@ -10,4 +10,4 @@
 import { dump } from '../formatters/html/main.js'
 import { obj } from './values.js'
 
-dump(obj)
+console.log(dump(obj))

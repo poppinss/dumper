@@ -10,7 +10,21 @@
 import { themes } from './themes.js'
 import type { Token } from '../../src/types.js'
 import { HTMLPrinters } from './printers/main.js'
-import type { HTMLPrinterStyles } from './types.js'
+import type { HTMLFormatterConfig, HTMLPrinterStyles } from './types.js'
+
+/**
+ * Copy-pasted from
+ * https://github.com/ai/nanoid/blob/main/nanoid.js
+ */
+const seed = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+export let nanoid = (e = 21) => {
+  let output = ''
+  const random = crypto.getRandomValues(new Uint8Array(e))
+  for (let n = 0; n < e; n++) {
+    output += seed[63 & random[n]]
+  }
+  return output
+}
 
 /**
  * HTMLFormatter is used to format a collection of parser
@@ -28,6 +42,8 @@ import type { HTMLPrinterStyles } from './types.js'
  * ```
  */
 export class HTMLFormatter {
+  #cspNonce?: string
+
   /**
    * Styles for output elements
    */
@@ -74,21 +90,25 @@ export class HTMLFormatter {
     },
   }
 
-  constructor(
-    config?: {
-      styles?: Partial<HTMLPrinterStyles>
-    },
-    context?: Record<string, any>
-  ) {
+  constructor(config?: HTMLFormatterConfig, context?: Record<string, any>) {
     this.context = context || {}
+    this.#cspNonce = config?.cspNonce
     this.styles = Object.freeze({ ...themes.nightOwl, ...config?.styles })
   }
 
   /**
-   * Wraps the final output into pre and code tags
+   * Wraps the final output inside pre tags and add the script
+   * to activate the frontend iteractions.
    */
-  #wrapInPre(code: string) {
-    return `<pre style="${this.styles.pre}"><code>${code}</code></pre>`
+  #wrapOutput(code: string) {
+    const id = nanoid()
+    const nonce = this.#cspNonce ? ` nonce="${this.#cspNonce}"` : ''
+    return (
+      `<div id="${id}" class="dumper-dump">` +
+      `<pre style="${this.styles.pre}"><code>${code}</code></pre>` +
+      `<script${nonce}>dumperActivate('${id}')</script>` +
+      '<div>'
+    )
   }
 
   /**
@@ -96,7 +116,7 @@ export class HTMLFormatter {
    * inside the `pre` tag.
    */
   format(tokens: Token[]) {
-    return this.#wrapInPre(
+    return this.#wrapOutput(
       tokens
         .map((token) => {
           const formatter = HTMLPrinters[token.type]

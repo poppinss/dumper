@@ -130,4 +130,5 @@ export type TokenPrinters = {
  */
 export type HTMLFormatterConfig = {
   styles?: Partial<HTMLPrinterStyles>
+  cspNonce?: string
 }

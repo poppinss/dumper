@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+export * from './head.js'
 export { themes } from './themes.js'
 export * as helpers from './helpers.js'
 import { Parser } from '../../src/parser.js'

@@ -95,6 +95,7 @@ export const obj = {
   },
   collection,
   hooks,
+  'promise': new Promise((resolve) => resolve('foo')),
   'model': new Model(),
   'balance': BigInt(100),
   'id': Symbol('1234'),

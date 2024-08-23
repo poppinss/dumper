@@ -15,8 +15,8 @@ import type { HTMLPrinterStyles } from './types.js'
  */
 export const themes: Record<string, HTMLPrinterStyles> = {
   nightOwl: {
-    pre: 'background-color: #061626; color: #c792ea;',
-    toggle: 'color: #637777;',
+    pre: 'background-color: #061626; color: #c792ea; font-family: Menlo, Monaco, Consolas, monospace; line-height: 24px; font-size: 15px; overflow-x: scroll; position:relative; z-index:99999;',
+    toggle: 'color: #637777; background: none; border: none;',
     braces: 'color: #ffd700;',
     brackets: 'color: #ffd700;',
     number: 'color: #f78c6c;',
