@@ -3,19 +3,48 @@
  * of the document
  */
 export function createStyleSheet() {
-  return `pre samp {
+  return `.dumper-dump {
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: Menlo, Monaco, Consolas, monospace;
+}
+.dumper-dump .dumper-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 8px 6px 8px;
+}
+.dumper-dump .dumper-source {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
+.dumper-dump pre {
+  font-family: Menlo, Monaco, Consolas, monospace;
+  line-height: 24px;
+  font-size: 15px;
+  overflow-x: scroll;
+  position:relative;
+  z-index:99999;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin: 0;
+}
+.dumper-dump pre samp {
   position: relative;
 }
-pre samp[hidden="true"] {
+.dumper-dump pre samp[hidden="true"] {
   display: none;
 }
-.dumper-prototype-group {
+.dumper-dump .dumper-prototype-group {
   opacity: 0.5;
 }
-.dumper-toggle span {
+.dumper-dump .dumper-toggle span {
   display: inline-block;
 }
-.dumper-toggle[aria-expanded="true"] span {
+.dumper-dump .dumper-toggle[aria-expanded="true"] span {
   transform: rotate(90deg);
 }`
 }

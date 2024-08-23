@@ -15,7 +15,10 @@ import type { HTMLPrinterStyles } from './types.js'
  */
 export const themes = {
   nightOwl: {
-    pre: 'background-color: #061626; color: #c792ea; font-family: Menlo, Monaco, Consolas, monospace; line-height: 24px; font-size: 15px; overflow-x: scroll; position:relative; z-index:99999;',
+    pre: 'background-color: #061626; color: #c792ea;',
+    shell: 'background-color: #0c2f4c;',
+    head: 'color: #cdd6f4;',
+    sourceLink: 'color: #cdd6f4; font-style: italic;',
     toggle: 'color: #978f63; background: none; border: none;',
     braces: 'color: #ffd700;',
     brackets: 'color: #ffd700;',
@@ -48,7 +51,10 @@ export const themes = {
     unknownLabel: 'color: #7fdbca;',
   },
   minLight: {
-    pre: 'background-color: #fff; color: #212121; font-family: Menlo, Monaco, Consolas, monospace; line-height: 24px; font-size: 15px; overflow-x: scroll; position:relative; z-index:99999;',
+    pre: 'background-color: #fff; color: #212121;',
+    shell: 'background-color: #eeeeee;',
+    head: 'color: #212121;',
+    sourceLink: 'color: #1976d2; font-style: italic;',
     toggle: 'color: #8992be; background: none; border: none;',
     braces: 'color: #0431fa;',
     brackets: 'color: #0431fa;',
@@ -81,7 +87,10 @@ export const themes = {
     unknownLabel: 'color: #7b3814;',
   },
   catppuccin: {
-    pre: 'background-color: #1e1e2e; color: #94e2d5; font-family: Menlo, Monaco, Consolas, monospace; line-height: 24px; font-size: 15px; overflow-x: scroll; position:relative; z-index:99999;',
+    pre: 'background-color: #1e1e2e; color: #94e2d5;',
+    shell: 'background-color: #35354b;',
+    head: 'color: #cdd6f4;',
+    sourceLink: 'color: #cdd6f4; font-style: italic;',
     toggle: 'color: #85656e; background: none; border: none;',
     braces: 'color: #f38ba8;',
     brackets: 'color: #f38ba8;',

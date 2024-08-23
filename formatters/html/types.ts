@@ -22,6 +22,24 @@ import type { HTMLFormatter } from './main.js'
  * ```
  */
 export type HTMLPrinterStyles = {
+  /**
+   * The shell div contains the head and the
+   * pre tags
+   */
+  shell: string
+
+  /**
+   * Styles for the dumper head element that contains
+   * the title and the source link anchor tag
+   */
+  head: string
+
+  /**
+   * Styles for the anchor tag that displays
+   * the source file info
+   */
+  sourceLink: string
+
   pre: string
   braces: string
   brackets: string
@@ -131,4 +149,17 @@ export type TokenPrinters = {
 export type HTMLFormatterConfig = {
   styles?: Partial<HTMLPrinterStyles>
   cspNonce?: string
+
+  /**
+   * The head section contains the metadata about the
+   * dumped values. It can have a title and a link
+   * to the source file that printed the dump
+   */
+  head?: {
+    title?: string
+    source?: {
+      link: string
+      text: string
+    }
+  }
 }
