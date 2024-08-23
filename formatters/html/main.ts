@@ -7,102 +7,40 @@
  * file that was distributed with this source code.
  */
 
-import { themes } from './themes.js'
-import type { Token } from '../../src/types.js'
-import { HTMLPrinters } from './printers/main.js'
-import type { HTMLPrinterStyles } from './types.js'
+export { themes } from './themes.js'
+export * as helpers from './helpers.js'
+import { Parser } from '../../src/parser.js'
+import { HTMLFormatter } from './formatter.js'
+export { HTMLFormatter } from './formatter.js'
+import { HTMLFormatterConfig } from './types.js'
+import { ParserConfig } from '../../src/types.js'
+export { HTMLPrinters } from './printers/main.js'
 
 /**
- * HTMLFormatter is used to format a collection of parser
- * tokens into HTML output containing pre-tags.
+ * Generate pretty printed HTML output for the provided value. You can
+ * specify the parser and the formatter options as the 2nd argument.
  *
  * @example
  * ```ts
- * const parser = new Parser()
- * parser.parse(value)
+ * const html = dump(someValue)
  *
- * const tokens = parser.flush()
+ * // With Parser options
+ * const html = dump(someValue, {
+ *   inspectObjectPrototype: true,
+ *   depth: 10,
+ *   showHidden: true,
+ * })
  *
- * const formatter = new HTMLFormatter()
- * const html = formatter.format(tokens)
+ * // With Formatter options
+ * const html = dump(someValue, {
+ *   styles: {
+ *     number: 'color: yellow; font-weight: bold;'
+ *   }
+ * })
  * ```
  */
-export class HTMLFormatter {
-  /**
-   * Styles for output elements
-   */
-  readonly styles: HTMLPrinterStyles
-
-  /**
-   * Context maintained through out the printing
-   * phase. Each instance has its own context
-   * that gets mutated internally.
-   */
-  context: Record<string, any>
-
-  /**
-   * Value for the newline character
-   */
-  readonly newLine = '\n'
-
-  /**
-   * Utility to manage indentation
-   */
-  readonly indentation = {
-    counter: 0,
-
-    /**
-     * Increment the identation by 1 step
-     */
-    increment() {
-      this.counter++
-    },
-
-    /**
-     * Decrement the identation by 1 step
-     */
-    decrement() {
-      this.counter--
-    },
-
-    /**
-     * Get the identation spaces as per the current
-     * identation level
-     */
-    getSpaces() {
-      return new Array(this.counter * 2 + 1).join('&nbsp;')
-    },
-  }
-
-  constructor(
-    config: {
-      styles?: Partial<HTMLPrinterStyles>
-    },
-    context?: Record<string, any>
-  ) {
-    this.context = context || {}
-    this.styles = Object.freeze({ ...themes.nightOwl, ...config.styles })
-  }
-
-  /**
-   * Wraps the final output into pre and code tags
-   */
-  #wrapInPre(code: string) {
-    return `<pre style="${this.styles.pre}"><code>${code}</code></pre>`
-  }
-
-  /**
-   * Format a collection of tokens to HTML output wrapped
-   * inside the `pre` tag.
-   */
-  format(tokens: Token[]) {
-    return this.#wrapInPre(
-      tokens
-        .map((token) => {
-          const formatter = HTMLPrinters[token.type]
-          return formatter(token as any, this) || ''
-        })
-        .join('')
-    )
-  }
+export function dump(value: any, config?: ParserConfig & HTMLFormatterConfig) {
+  const parser = new Parser(config)
+  parser.parse(value)
+  return new HTMLFormatter(config).format(parser.flush())
 }

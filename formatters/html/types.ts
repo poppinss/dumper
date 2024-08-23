@@ -124,3 +124,10 @@ export type TokenPrinters = {
     formatter: HTMLFormatter
   ) => string
 }
+
+/**
+ * Config accepted by the HTML Formatter
+ */
+export type HTMLFormatterConfig = {
+  styles?: Partial<HTMLPrinterStyles>
+}

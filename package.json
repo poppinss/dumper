@@ -5,10 +5,24 @@
   "main": "build/index.js",
   "type": "module",
   "scripts": {
+    "pretest": "npm run lint",
     "test": "npm run quick:test",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "clean": "del-cli build",
+    "typecheck": "tsc --noEmit",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "build": "npm run compile",
+    "version": "npm run build",
+    "prepublishOnly": "npm run build",
     "quick:test": "node --import ts-node-maintained/register/esm --enable-source-maps bin/test.js"
+  },
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/src/types.js",
+    "./html": "./build/formatters/html/main.js",
+    "./html/types": "./build/formatters/html/types.js"
   },
   "keywords": [
     "dumper",
@@ -27,6 +41,7 @@
     "@japa/snapshot": "^2.0.5",
     "@poppinss/utils": "^6.7.3",
     "@swc/core": "^1.7.14",
+    "del-cli": "^5.1.0",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
     "rxjs": "^7.8.1",
@@ -39,7 +54,12 @@
     "ansis": "^3.3.2"
   },
   "tsup": {
-    "entry": [],
+    "entry": [
+      "index.ts",
+      "src/types.ts",
+      "formatters/html/main.ts",
+      "formatters/html/types.ts"
+    ],
     "outDir": "./build",
     "clean": true,
     "format": "esm",
