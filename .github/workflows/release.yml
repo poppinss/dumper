@@ -3,6 +3,8 @@ permissions:
   contents: write
   id-token: write
 jobs:
+  checks:
+    uses: ./checks.yml
   release:
     runs-on: ubuntu-latest
     steps:
