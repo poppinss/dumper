@@ -23,6 +23,9 @@ import type { HTMLFormatter } from './main.js'
  */
 export type HTMLPrinterStyles = {
   pre: string
+  braces: string
+  brackets: string
+  toggle: string
 
   string: string
   number: string
@@ -48,8 +51,8 @@ export type HTMLPrinterStyles = {
   classLabel: string
 
   /**
-   * Styles for the Object label and opening/closing
-   * curly braces
+   * Styles for the Object label. Use braces setting to define
+   * the braces color
    */
   objectLabel: string
 
@@ -64,26 +67,20 @@ export type HTMLPrinterStyles = {
   objectKeyPrefix: string
 
   /**
-   * Styles for the Array label and opening/closing
-   * square brackets
+   * Styles for the Array label. Use brackets setting to define
+   * the brackets color
    */
   arrayLabel: string
 
   /**
-   * Styles for the Prototype properties object label
-   * and opening/closing curly braces
-   */
-  prototypeLabel: string
-
-  /**
-   * Styles for the Map label and opening/closing
-   * curly braces
+   * Styles for the Map label. Use brackets setting to define
+   * the brackets color
    */
   mapLabel: string
 
   /**
-   * Styles for the Set label and opening/closing
-   * square brackets
+   * Styles for the Set label. Use brackets setting to define
+   * the brackets color
    */
   setLabel: string
 
@@ -93,6 +90,7 @@ export type HTMLPrinterStyles = {
   observableLabel: string
   promiseLabel: string
   generatorLabel: string
+  prototypeLabel: string
 
   /**
    * Styles for displaying Blob keyword label. The blob

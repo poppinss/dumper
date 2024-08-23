@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
+import { themes } from './themes.js'
 import type { Token } from '../../src/types.js'
 import { HTMLPrinters } from './printers/main.js'
-import { defaultStyles } from './default_styles.js'
 import type { HTMLPrinterStyles } from './types.js'
 
 /**
@@ -81,7 +81,7 @@ export class HTMLFormatter {
     context?: Record<string, any>
   ) {
     this.context = context || {}
-    this.styles = Object.freeze({ ...defaultStyles, ...config.styles })
+    this.styles = Object.freeze({ ...themes.nightOwl, ...config.styles })
   }
 
   /**
