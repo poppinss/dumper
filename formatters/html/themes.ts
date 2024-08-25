@@ -16,10 +16,7 @@ import type { HTMLPrinterStyles } from './types.js'
 export const themes = {
   nightOwl: {
     pre: 'background-color: #061626; color: #c792ea;',
-    shell: 'background-color: #0c2f4c;',
-    head: 'color: #cdd6f4;',
-    sourceLink: 'color: #cdd6f4; font-style: italic;',
-    toggle: 'color: #978f63; background: none; border: none;',
+    toggle: 'color: #4f5357; background: none; border: none;',
     braces: 'color: #ffd700;',
     brackets: 'color: #ffd700;',
     number: 'color: #f78c6c;',
@@ -52,10 +49,7 @@ export const themes = {
   },
   minLight: {
     pre: 'background-color: #fff; color: #212121;',
-    shell: 'background-color: #eeeeee;',
-    head: 'color: #212121;',
-    sourceLink: 'color: #1976d2; font-style: italic;',
-    toggle: 'color: #8992be; background: none; border: none;',
+    toggle: 'color: #989999; background: none; border: none;',
     braces: 'color: #0431fa;',
     brackets: 'color: #0431fa;',
     number: 'color: #1976d2;',
@@ -88,10 +82,7 @@ export const themes = {
   },
   catppuccin: {
     pre: 'background-color: #1e1e2e; color: #94e2d5;',
-    shell: 'background-color: #35354b;',
-    head: 'color: #cdd6f4;',
-    sourceLink: 'color: #cdd6f4; font-style: italic;',
-    toggle: 'color: #85656e; background: none; border: none;',
+    toggle: 'color: #7c7c8c; background: none; border: none;',
     braces: 'color: #f38ba8;',
     brackets: 'color: #f38ba8;',
     number: 'color: #fab387;',

@@ -12,13 +12,6 @@ import { obj } from './values.js'
 
 console.log(
   dump(obj, {
-    styles: themes.minLight,
-    head: {
-      title: 'DUMPER',
-      source: {
-        link: '',
-        text: 'pages/posts/index.edge(32:2)',
-      },
-    },
+    styles: themes.catppuccin,
   })
 )

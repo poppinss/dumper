@@ -4,24 +4,7 @@
  */
 export function createStyleSheet() {
   return `.dumper-dump, .dumper-dump pre, .dumper-dump code, .dumper-dump samp {
-  font-family: Menlo, Monaco, Consolas, monospace;
-}
-.dumper-dump {
-  padding: 4px;
-  border-radius: 4px;
-  font-size: 13px;
-}
-.dumper-dump .dumper-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 8px 6px 8px;
-}
-.dumper-dump .dumper-source {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 10px;
+  font-family: JetBrains Mono, monaspace argon, Menlo, Monaco, Consolas, monospace;
 }
 .dumper-dump pre {
   line-height: 24px;
@@ -30,7 +13,6 @@ export function createStyleSheet() {
   position:relative;
   z-index:99999;
   padding: 10px 15px;
-  border-radius: 4px;
   margin: 0;
 }
 .dumper-dump pre samp {
@@ -42,13 +24,20 @@ export function createStyleSheet() {
 .dumper-dump .dumper-prototype-group {
   opacity: 0.5;
 }
+
+.dumper-dump .dumper-toggle {
+   transform: rotate(270deg);
+}
+
 .dumper-dump .dumper-toggle span {
   display: inline-block;
   position: relative;
-  top: 3px;
+  top: 1px;
+  margin: 0 5px;
+  font-size: 14px;
 }
-.dumper-dump .dumper-toggle[aria-expanded="true"] span {
-  transform: rotate(90deg);
+.dumper-dump .dumper-toggle[aria-expanded="true"] {
+  transform: none;
 }`
 }
 

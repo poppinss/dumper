@@ -104,29 +104,8 @@ export class HTMLFormatter {
     const id = `dump-${nanoid()}`
     const nonce = this.#config.cspNonce ? ` nonce="${this.#config.cspNonce}"` : ''
 
-    let head = ''
-    const title = this.#config.head?.title
-    const source = this.#config.head?.source
-
-    /**
-     * Constructing the head elements when source or the
-     * title are provided
-     */
-    if (title || source) {
-      head =
-        `<div class="dumper-head" style="${this.styles.head}">` +
-        (title ? `<div class="dumper-title">${title}</div>` : '') +
-        (source
-          ? '<div class="dumper-source">' +
-            `<a style="${this.styles.sourceLink}" href="${source.link}">${source.text}</a>` +
-            '</div>'
-          : '') +
-        '</div>'
-    }
-
     return (
-      `<div id="${id}" class="dumper-dump" style="${this.styles.shell}">` +
-      head +
+      `<div id="${id}" class="dumper-dump">` +
       `<pre style="${this.styles.pre}"><code>${code}</code></pre>` +
       `<script${nonce}>dumperActivate('${id}')</script>` +
       '</div>'
