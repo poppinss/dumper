@@ -8,6 +8,7 @@
  */
 
 const fooSymbol = Symbol.for('foo')
+const blob = new Blob(['hello'])
 
 class User {
   constructor() {
@@ -37,19 +38,22 @@ class User {
   }
 }
 
-const holes = ['a', 'b']
+const holes: any[] = ['a', 'b']
 holes[4] = 'e'
 holes[6] = 'g'
+holes[7] = holes
 
-const hooks: Set<(() => void) | { name: string; fn: () => void }> = new Set()
+const hooks: Set<(() => void) | { name: string; fn: (() => void) | Set<any> }> = new Set()
 hooks.add(() => {})
 hooks.add({ name: 'afterCreate', fn: async () => {} })
 hooks.add({ name: 'beforeCreate', fn: async () => {} })
+hooks.add({ name: 'self', fn: hooks })
 
-const middleware: Map<{ name: string; type: string }, { fn: Function }> = new Map()
+const middleware: Map<{ name: string; type: string }, { fn: Function } | Map<any, any>> = new Map()
 middleware.set({ name: 'auth', type: 'global' }, { fn: () => {} })
 middleware.set({ name: 'bouncer', type: 'router' }, { fn: () => {} })
 middleware.set({ name: 'assets', type: 'server' }, { fn: () => {} })
+middleware.set({ name: 'self', type: 'reference' }, middleware)
 
 class Collection<T> extends Array<T> {
   items: T[] = []
@@ -76,6 +80,13 @@ class Model {
 }
 
 const collection = new Collection(new User())
+const e = {
+  regex: /^x/i,
+  buf: Buffer.from('abc'),
+  holes: holes,
+  circular: {},
+}
+e.circular = e
 
 export const obj = {
   'a': 1,
@@ -84,15 +95,12 @@ export const obj = {
   'bio': `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
   'c': undefined,
   'd': null,
+  blob,
   'user': new User(),
   'User': User,
   'error': new Error('Something went wrong'),
   'url': new URL('./index.js?username=virk', 'https://unpkg.com'),
-  'e': {
-    regex: /^x/i,
-    buf: Buffer.from('abc'),
-    holes: holes,
-  },
+  'e': e,
   collection,
   hooks,
   'promise': new Promise((resolve) => resolve('foo')),

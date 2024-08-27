@@ -7,52 +7,42 @@
  * file that was distributed with this source code.
  */
 
-import { HTMLFormatter } from '../main.js'
+import { wordWrap } from '../../../src/helpers.js'
+import { ConsoleFormatter } from '../formatter.js'
 import type { TokenPrinters } from '../types.js'
-import { htmlEscape, wordWrap } from '../../../src/helpers.js'
 
-const dropdownIcon = '&#9660;'
-
-function openingBrace(formatter: HTMLFormatter) {
-  return `<span style="${formatter.styles.braces}">{</span>`
+function openingBrace(formatter: ConsoleFormatter) {
+  return formatter.styles.braces('{')
 }
-function closingBrace(formatter: HTMLFormatter) {
-  return `<span style="${formatter.styles.braces}">}</span>`
+function closingBrace(formatter: ConsoleFormatter) {
+  return formatter.styles.braces('}')
 }
-function openingBrackets(formatter: HTMLFormatter) {
-  return `<span style="${formatter.styles.brackets}">[</span>`
+function openingBrackets(formatter: ConsoleFormatter) {
+  return formatter.styles.brackets('[')
 }
-function closingBrackets(formatter: HTMLFormatter) {
-  return `<span style="${formatter.styles.brackets}">]</span>`
+function closingBrackets(formatter: ConsoleFormatter) {
+  return formatter.styles.brackets(']')
 }
 
 /**
- * HTML printers to pretty print parser tokens
+ * Console printers to pretty print parser tokens
  */
-export const HTMLPrinters: TokenPrinters = {
+export const ConsolePrinters: TokenPrinters = {
   'object-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.objectLabel
-    const toggleStyles = formatter.styles.toggle
-    const label = formatter.context.isStaticMember
-      ? ' '
-      : `${token.constructorName || 'Object [null]'} `
+    const label =
+      formatter.context.isStaticMember || token.constructorName === 'Object'
+        ? ''
+        : styles(`${token.constructorName || 'Object [null]'}`) + ' '
 
-    return (
-      '<span class="dumper-group dumper-object-group">' +
-      `<span style="${styles}">${label}</span>` +
-      openingBrace(formatter) +
-      `<button class="dumper-toggle" style="${toggleStyles}">` +
-      `<span>${dropdownIcon}</span>` +
-      '</button><samp hidden="true">'
-    )
+    return label + openingBrace(formatter)
   },
 
   'object-end': (_, formatter) => {
     formatter.indentation.decrement()
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-
-    return indent + '</samp>' + closingBrace(formatter) + '</span>'
+    return indent + closingBrace(formatter)
   },
 
   'object-key': (token, formatter) => {
@@ -67,8 +57,6 @@ export const HTMLPrinters: TokenPrinters = {
     let value = token.value
     if (token.isSymbol) {
       value = `[${value}]`
-    } else if (!/^[a-z$_][$\w]*$/i.test(value)) {
-      value = `"${htmlEscape(value.replace(/"/g, '\\"'))}"`
     }
 
     /**
@@ -77,31 +65,25 @@ export const HTMLPrinters: TokenPrinters = {
     let prefix = ''
     if (formatter.context.isStaticMember) {
       const prefixStyles = formatter.styles.objectKeyPrefix
-      prefix = `<span class="dumper-object-prefix" style="${prefixStyles}">` + `static ` + '</span>'
+      prefix = prefixStyles('static')
     }
 
-    return (
-      indent +
-      prefix +
-      `<span class="dumper-object-key" style="${styles}">` +
-      `${value}` +
-      '</span>: '
-    )
+    return indent + prefix + styles(value) + ': '
   },
 
   'object-circular-ref': (_, formatter) => {
     const styles = formatter.styles.objectLabel
-    return `<span style="${styles}">[Object *Circular]</span>`
+    return styles('[Object *Circular]')
   },
 
   'object-max-depth-ref': (_, formatter) => {
     const styles = formatter.styles.objectLabel
-    return `<span style="${styles}">[Object]</span>`
+    return styles('[Object]')
   },
 
   'object-value-getter': (_, formatter) => {
     const styles = formatter.styles.objectLabel
-    return `<span style="${styles}">[Object Getter]</span>`
+    return styles('[Object Getter]')
   },
 
   'object-value-start': () => {
@@ -114,25 +96,16 @@ export const HTMLPrinters: TokenPrinters = {
 
   'array-start': (token, formatter) => {
     formatter.indentation.increment()
-    const toggleStyles = formatter.styles.toggle
     const styles = formatter.styles.arrayLabel
-    const label = `${token.name}:${token.size} `
+    const label = token.name !== 'Array' ? styles(`${token.name}`) + ' ' : ''
 
-    return (
-      '<span class="dumper-group dumper-array-group">' +
-      `<span style="${styles}">${label}</span>` +
-      openingBrackets(formatter) +
-      `<button class="dumper-toggle" style="${toggleStyles}">` +
-      `<span>${dropdownIcon}</span>` +
-      '</button><samp hidden="true">'
-    )
+    return label + openingBrackets(formatter)
   },
 
   'array-end': (_, formatter) => {
     formatter.indentation.decrement()
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-
-    return indent + '</samp>' + closingBrackets(formatter) + '</span>'
+    return indent + closingBrackets(formatter)
   },
 
   'array-value-start': (_, formatter) => {
@@ -143,12 +116,7 @@ export const HTMLPrinters: TokenPrinters = {
   'array-value-hole': (_, formatter) => {
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
     const styles = formatter.styles.undefined
-    return (
-      indent +
-      `<span class="dumper-undefined" style="${styles}">` +
-      `${htmlEscape('<hole>')},` +
-      '</span>'
-    )
+    return indent + styles('<hole>') + ','
   },
 
   'array-value-end': () => {
@@ -157,12 +125,12 @@ export const HTMLPrinters: TokenPrinters = {
 
   'array-circular-ref': (_, formatter) => {
     const styles = formatter.styles.arrayLabel
-    return `<span style="${styles}">[Array *Circular]</span>`
+    return styles('[Array *Circular]')
   },
 
   'array-max-depth-ref': (_, formatter) => {
     const styles = formatter.styles.arrayLabel
-    return `<span style="${styles}">[Array]</span>`
+    return styles('[Array]')
   },
 
   'array-max-length-ref': (token, formatter) => {
@@ -174,55 +142,38 @@ export const HTMLPrinters: TokenPrinters = {
     }
 
     const label = itemsLeft === 1 ? `1 more item` : `${itemsLeft} more items`
-    return `${indent}<span style="${styles}">[...${label}]</span>`
+    return indent + styles(`[...${label}]`)
   },
 
   'prototype-start': (_, formatter) => {
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
     formatter.indentation.increment()
     const styles = formatter.styles.prototypeLabel
-    const toggleStyles = formatter.styles.toggle
     const label = '[[Prototype]] '
 
-    return (
-      indent +
-      '<span class="dumper-group dumper-prototype-group">' +
-      `<span style="${styles}">${label}</span>` +
-      openingBrace(formatter) +
-      `<button class="dumper-toggle" style="${toggleStyles}">` +
-      `<span>${dropdownIcon}</span>` +
-      '</button><samp hidden="true">'
-    )
+    return indent + styles(label) + openingBrace(formatter)
   },
 
   'prototype-end': (_, formatter) => {
     formatter.indentation.decrement()
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
 
-    return indent + '</samp>' + closingBrace(formatter) + '</span>'
+    return indent + closingBrace(formatter)
   },
 
   'map-start': (token, formatter) => {
     formatter.indentation.increment()
-    const toggleStyles = formatter.styles.toggle
     const styles = formatter.styles.mapLabel
     const label = `Map:${token.size} `
 
-    return (
-      '<span class="dumper-group dumper-map-group">' +
-      `<span style="${styles}">${label}</span>` +
-      openingBrace(formatter) +
-      `<button class="dumper-toggle" style="${toggleStyles}">` +
-      `<span>${dropdownIcon}</span>` +
-      '</button><samp hidden="true">'
-    )
+    return styles(label) + openingBrace(formatter)
   },
 
   'map-end': (_, formatter) => {
     formatter.indentation.decrement()
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
 
-    return indent + '</samp>' + closingBrace(formatter) + '</span>'
+    return indent + closingBrace(formatter)
   },
 
   'map-row-start': (_, formatter) => {
@@ -241,40 +192,34 @@ export const HTMLPrinters: TokenPrinters = {
   'map-key-start': (_, formatter) => {
     const styles = formatter.styles.objectKey
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-
-    return indent + `<span style="${styles}">key</span>: `
+    return indent + styles('key') + ': '
   },
 
   'map-key-end': function (): string {
-    return ''
+    return ','
   },
 
   'map-value-start': (_, formatter) => {
     const styles = formatter.styles.objectKey
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-
-    return indent + `<span style="${styles}">value</span>: `
+    return indent + styles('value') + ': '
   },
 
   'map-value-end': function (): string {
-    return ''
+    return ','
   },
 
   'map-circular-ref': (_, formatter) => {
-    const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
     const styles = formatter.styles.mapLabel
-
-    return `${indent}<span style="${styles}">[Map *Circular]</span>`
+    return styles('[Map *Circular]')
   },
 
   'map-max-depth-ref': (_, formatter) => {
     const styles = formatter.styles.mapLabel
-
-    return `<span style="${styles}">[Map]</span>`
+    return styles('[Map]')
   },
 
   'map-max-length-ref': (token, formatter) => {
-    const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
     const styles = formatter.styles.mapLabel
     const itemsLeft = token.size - token.limit
     if (itemsLeft <= 0) {
@@ -282,30 +227,21 @@ export const HTMLPrinters: TokenPrinters = {
     }
 
     const label = itemsLeft === 1 ? `1 more item` : `${itemsLeft} more items`
-    return `${indent}<span style="${styles}">[...${label}]</span>`
+    return styles(`[...${label}]`)
   },
 
   'set-start': (token, formatter) => {
     formatter.indentation.increment()
-    const toggleStyles = formatter.styles.toggle
     const styles = formatter.styles.setLabel
     const label = `Set:${token.size} `
 
-    return (
-      '<span class="dumper-group dumper-set-group">' +
-      `<span class="dumper-set-label" style="${styles}">${label}</span>` +
-      openingBrackets(formatter) +
-      `<button class="dumper-toggle" style="${toggleStyles}">` +
-      `<span>${dropdownIcon}</span>` +
-      '</button><samp hidden="true">'
-    )
+    return styles(label) + openingBrackets(formatter)
   },
 
   'set-end': (_, formatter) => {
     formatter.indentation.decrement()
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-
-    return indent + '</samp>' + closingBrackets(formatter) + '</span>'
+    return indent + closingBrackets(formatter)
   },
 
   'set-value-start': (_, formatter) => {
@@ -319,14 +255,12 @@ export const HTMLPrinters: TokenPrinters = {
 
   'set-circular-ref': (_, formatter) => {
     const styles = formatter.styles.setLabel
-
-    return `<span style="${styles}">[Set *Circular]</span>`
+    return styles('[Set *Circular]')
   },
 
   'set-max-depth-ref': (_, formatter) => {
     const styles = formatter.styles.setLabel
-
-    return `<span style="${styles}">[Set]</span>`
+    return styles('[Set]')
   },
 
   'set-max-length-ref': (token, formatter) => {
@@ -338,7 +272,7 @@ export const HTMLPrinters: TokenPrinters = {
     }
 
     const label = itemsLeft === 1 ? `1 more item` : `${itemsLeft} more items`
-    return `${indent}<span style="${styles}">[...${label}]</span>`
+    return indent + styles(`[...${label}]`)
   },
 
   'string': (token, formatter) => {
@@ -349,7 +283,7 @@ export const HTMLPrinters: TokenPrinters = {
       value = token.value
         .split('\n')
         .map((row, index) => {
-          let rowValue = `<span>${htmlEscape(row.trim())}</span>`
+          let rowValue = row.trim()
           if (index > 0) {
             rowValue = `${indent}${rowValue}`
           }
@@ -361,45 +295,45 @@ export const HTMLPrinters: TokenPrinters = {
         newLine: formatter.newLine,
         indent: formatter.indentation.getSpaces(),
         width: 70,
+        escape: (line) => line,
       })
     }
 
     const styles = formatter.styles.string
-    return `<span class="dumper-string" style="${styles}">` + `${value}` + '</span>'
+    return styles(value)
   },
 
   'boolean': (token, formatter) => {
     const styles = formatter.styles.boolean
-    return `<span class="dumper-boolean" style="${styles}">` + token.value + '</span>'
+    return styles(String(token.value))
   },
 
   'number': (token, formatter) => {
     const styles = formatter.styles.number
-    return `<span class="dumper-number" style="${styles}">` + token.value + '</span>'
+    return styles(String(token.value))
   },
 
   'bigInt': (token, formatter) => {
     const styles = formatter.styles.bigInt
-    return `<span class="dumper-big-int" style="${styles}">` + token.value + '</span>'
+    return styles(token.value)
   },
 
   'undefined': (_, formatter) => {
     const styles = formatter.styles.undefined
-    return `<span class="dumper-undefined" style="${styles}">` + 'undefined' + '</span>'
+    return styles('undefined')
   },
 
   'null': (_, formatter) => {
     const styles = formatter.styles.null
-    return `<span class="dumper-null" style="${styles}">` + 'null' + '</span>'
+    return styles('null')
   },
 
   'symbol': (token, formatter) => {
     const styles = formatter.styles.symbol
-    return `<span class="dumper-symbol" style="${styles}">` + token.value + '</span>'
+    return styles(token.value)
   },
 
   'function': (token, formatter) => {
-    const className = token.isClass ? 'dumper-class' : 'dumper-function'
     const styles = token.isClass ? formatter.styles.classLabel : formatter.styles.functionLabel
 
     const async = token.isAsync ? `async ` : ''
@@ -408,84 +342,77 @@ export const HTMLPrinters: TokenPrinters = {
       ? `[class ${token.name}]`
       : `[${async}${generator}function ${token.name}]`
 
-    return `<span class="${className}" style="${styles}">` + label + '</span>'
+    return styles(label)
   },
 
   'date': function (token, formatter): string {
     const styles = formatter.styles.date
-    return `<span class="dumper-date" style="${styles}">` + token.value + '</span>'
+    return styles(token.value)
   },
 
   'buffer': function (token, formatter): string {
     const styles = formatter.styles.buffer
-    return `<span class="dumper-buffer" style="${styles}">` + htmlEscape(token.value) + '</span>'
+    return styles(token.value)
   },
 
   'regexp': function (token, formatter): string {
     const styles = formatter.styles.regex
-    return `<span class="dumper-regex" style="${styles}">` + token.value + '</span>'
+    return styles(token.value)
   },
 
   'unknown': function (token, formatter): string {
     const styles = formatter.styles.unknownLabel
-    return `<span class="dumper-value-unknown" style="${styles}">` + String(token.value) + '</span>'
+    return styles(String(token.value))
   },
 
   'weak-set': function (_, formatter): string {
     const styles = formatter.styles.weakSetLabel
-    return `<span class="dumper-weak-set" style="${styles}">` + `[WeakSet]` + '</span>'
+    return styles('[WeakSet]')
   },
 
   'weak-ref': function (_, formatter): string {
     const styles = formatter.styles.weakRefLabel
-    return `<span class="dumper-weak-ref" style="${styles}">` + `[WeakRef]` + '</span>'
+    return styles('[WeakRef]')
   },
 
   'weak-map': function (_, formatter): string {
     const styles = formatter.styles.weakMapLabel
-    return `<span class="dumper-weak-map" style="${styles}">` + `[WeakMap]` + '</span>'
+    return styles('[WeakMap]')
   },
 
   'observable': function (_, formatter): string {
     const styles = formatter.styles.observableLabel
-    return `<span class="dumper-observable" style="${styles}">` + `[Observable]` + '</span>'
+    return styles('[Observable]')
   },
 
   'blob': function (token: { size: number; contentType: string }, formatter): string {
     const styles = formatter.styles.objectLabel
-    const propertiesStart = `<span styles="${formatter.styles.braces}">{ `
-    const propertiesEnd = `<span styles="${formatter.styles.braces}"> }</span></span>`
 
-    const sizeProp = `<span styles="${formatter.styles.objectKey}">size: </span>`
-    const sizeValue = `<span styles="${formatter.styles.number}">${token.size}</span>,`
+    const sizeProp = formatter.styles.objectKey('size: ')
+    const sizeValue = formatter.styles.number(`${token.size}`)
 
-    const typeProp = `<span styles="${formatter.styles.objectKey}">type: </span>`
-    const typeValue = `<span styles="${formatter.styles.string}">${token.contentType}</span>`
+    const typeProp = token.contentType ? `, ${formatter.styles.objectKey('type: ')}` : ''
+    const typeValue = token.contentType ? formatter.styles.string(`${token.contentType}`) : ''
 
     return (
-      `<span class="dumper-blob" style="${styles}">` +
-      '[Blob]' +
-      propertiesStart +
-      `${sizeProp}${sizeValue} ${typeProp}${typeValue}` +
-      propertiesEnd +
-      '</span>'
+      styles('[Blob]') +
+      ' ' +
+      openingBrace(formatter) +
+      `${sizeProp}${sizeValue}${typeProp}${typeValue}` +
+      closingBrace(formatter)
     )
   },
 
   'promise': function (token: { isFulfilled: boolean }, formatter): string {
     const styles = formatter.styles.promiseLabel
     const label = token.isFulfilled ? 'resolved' : 'pending'
-    return (
-      `<span class="dumper-promise" style="${styles}">` +
-      `[Promise${htmlEscape(`<${label}>`)}]` +
-      '</span>'
-    )
+    return styles(`[Promise${`<${label}>`}]`)
   },
 
   'generator': function (token: { isAsync: boolean }, formatter): string {
     const styles = formatter.styles.generatorLabel
     const label = token.isAsync ? '[AsyncGenerator] {}' : '[Generator] {}'
-    return `<span class="dumper-generator" style="${styles}">` + label + '</span>'
+    return styles(label)
   },
 
   'static-members-start': function (_, formatter): string {

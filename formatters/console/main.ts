@@ -8,13 +8,12 @@
  */
 
 import { Parser } from '../../src/parser.js'
-import { HTMLFormatter } from './formatter.js'
-import type { HTMLDumpConfig } from './types.js'
+import { ConsoleFormatter } from './formatter.js'
+import type { ConsoleDumpConfig } from './types.js'
 
-export * from './head.js'
+export { ConsoleFormatter }
 export { themes } from './themes.js'
-export { HTMLFormatter } from './formatter.js'
-export { HTMLPrinters } from './printers/main.js'
+export { ConsolePrinters } from './printers/main.js'
 
 /**
  * Generate pretty printed HTML output for the provided value. You can
@@ -39,8 +38,8 @@ export { HTMLPrinters } from './printers/main.js'
  * })
  * ```
  */
-export function dump(value: any, config?: HTMLDumpConfig) {
+export function dump(value: any, config?: ConsoleDumpConfig) {
   const parser = new Parser(config)
   parser.parse(value)
-  return new HTMLFormatter(config).format(parser.flush())
+  return new ConsoleFormatter(config).format(parser.flush())
 }
