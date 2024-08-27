@@ -11,7 +11,7 @@ import { HTMLFormatter } from '../main.js'
 import type { TokenPrinters } from '../types.js'
 import { htmlEscape, wordWrap } from '../helpers.js'
 
-const dropdownIcon = `▼`
+const dropdownIcon = '&#9660;'
 
 function openingBrace(formatter: HTMLFormatter) {
   return `<span style="${formatter.styles.braces}">{</span>`
