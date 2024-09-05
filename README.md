@@ -4,6 +4,8 @@
 
 Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options) but it provides more control over the output. You can use Dumper to generate [HTML output](#html-formatter), [CLI output](#cli-formatter), or use its [low-level API](#using-parser-directly) to create inspection tokens and render them using a custom formatter.
 
+![](./dumper-example.png)
+
 > [!IMPORTANT]
 > Dumper is a low-level utility and you may have to write a wrapper around it for the framework of your choice.
 
@@ -129,7 +131,7 @@ console.log(ansiOutput)
 
 You may pass all of the [Parser options](#parser-options) alongside the following options as the second argument to the `dump` method.
 
-- `styles`: The styles property contains a set of functions for different tokens. Each function receives a string input and must return a styled output string. 
+- `styles`: The styles property contains a set of functions for different tokens. Each function receives a string input and must return a styled output string.
 
 Following is an example of using a pre-existing theme.
 
