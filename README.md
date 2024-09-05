@@ -2,7 +2,7 @@
 
 > Pretty print JavaScript data types in the terminal and the browser
 
-Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options) but it provides more control over the output. You can use Dumper to generate HTML output, CLI output, or use its low-level API to create inspection tokens and render them using a custom formatter.
+Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options) but it provides more control over the output. You can use Dumper to generate [HTML output](#html-formatter), [CLI output](#cli-formatter), or use its [low-level API](#using-parser-directly) to create inspection tokens and render them using a custom formatter.
 
 > [!IMPORTANT]
 > Dumper is a low-level utility and you may have to write a wrapper around it for the framework of your choice.
@@ -227,7 +227,7 @@ dump(values, {
 - `showHidden`: When set to true, the non-enumerable properties of an object will be processed. **Default: `false`**.
 - `depth`: The depth at which to stop parsing nested values. The depth is shared among all tree like data structures. For example: Objects,Arrays,Maps and Sets. **Default: `5`**.
 - `inspectObjectPrototype`: Inspect prototype properties of an object. The non-enumerable properties of prototype are included by default. **Default: `false`**.
-- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could be helpful for inspect prototype properties of extended arrays.
+- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could be helpful for inspect prototype properties of extended arrays. **Default: `false`**.
 - `inspectStaticMembers`: Inspect static members of a class. Even though functions and classes are technically same, this config only applies to functions defined using the `[class]` keyword. **Default: `false`**.
 - `maxArrayLength`: Maximum number of members to process for Arrays, Maps and Sets. **Default: `100`**.
 - `maxStringLength`: Maximum number of characters to display for a string. **Default: `1000`**.
