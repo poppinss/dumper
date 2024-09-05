@@ -76,7 +76,7 @@ export class ConsoleFormatter {
 
   constructor(config?: ConsoleFormatterConfig, context?: Record<string, any>) {
     this.context = context || {}
-    this.styles = Object.freeze({ ...themes.dark, ...config?.styles })
+    this.styles = Object.freeze({ ...themes.default, ...config?.styles })
   }
 
   /**

@@ -14,7 +14,7 @@ import type { ConsolePrinterStyles } from './types.js'
  * Default styles to use for pretty printing to ANSI output
  */
 export const themes = {
-  dark: {
+  default: {
     braces: (value) => styleText('yellow', value),
     brackets: (value) => styleText('yellow', value),
     number: (value) => styleText('yellow', value),
