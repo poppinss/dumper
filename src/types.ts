@@ -233,9 +233,14 @@ export type ParserConfig = {
    * Inspect prototype properties of an object. The non-enumerable properties
    * of prototype are included by default.
    *
-   * Defaults to false
+   * Defaults to "unless-plain-object"
+   *
+   * - The "unless-plain-object" will inspect the prototype of objects
+   *   created with a prototype other than the "Object"
+   * - True will inspect the prototype for all objects that has a prototype
+   * - False will not inpsect the prototype
    */
-  inspectObjectPrototype?: boolean
+  inspectObjectPrototype?: boolean | 'unless-plain-object'
 
   /**
    * Inspect prototype properties of an array. The non-enumerable properties

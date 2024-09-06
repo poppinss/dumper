@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import is from '@sindresorhus/is'
 import type { Parser } from './parser.js'
 
 const ObjectPrototype = Reflect.ownKeys(Object.prototype)
@@ -21,7 +22,7 @@ export function tokenizeObject(
   config: {
     depth: number
     showHidden: boolean
-    inspectObjectPrototype: boolean
+    inspectObjectPrototype: boolean | 'unless-plain-object'
     constructorName?: string
     membersToIgnore?: (string | symbol)[]
     eagerGetters?: (string | symbol)[]
@@ -131,7 +132,9 @@ export function tokenizeObject(
    * Tokenize the prototype of an object. Prototypes should
    * not count against the depth.
    */
-  if (config.inspectObjectPrototype) {
+  if (config.inspectObjectPrototype === true) {
+    tokenizePrototype(value, parser, { membersToIgnore: ObjectPrototype })
+  } else if (config.inspectObjectPrototype === 'unless-plain-object' && !is.plainObject(value)) {
     tokenizePrototype(value, parser, { membersToIgnore: ObjectPrototype })
   }
 
@@ -157,6 +160,10 @@ export function tokenizePrototype(
   }
 ) {
   const objectPrototype = Object.getPrototypeOf(value)
+  if (!objectPrototype) {
+    return
+  }
+
   const ownKeys = Reflect.ownKeys(objectPrototype)
   const eagerGetters = config.eagerGetters ?? []
 

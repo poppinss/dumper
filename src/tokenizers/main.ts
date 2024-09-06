@@ -242,6 +242,7 @@ export const tokenizers: Partial<Record<TypeName, Tokenizer>> = {
     tokenizeObject(value, parser, {
       eagerGetters: ['message', 'stack'],
       ...parser.config,
+      inspectObjectPrototype: parser.config.inspectObjectPrototype === true ? true : false,
       showHidden: true,
     })
   },

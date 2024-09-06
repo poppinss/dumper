@@ -50,7 +50,7 @@ export class Parser {
     this.config = Object.freeze({
       showHidden: false,
       depth: 5,
-      inspectObjectPrototype: false,
+      inspectObjectPrototype: 'unless-plain-object',
       inspectArrayPrototype: false,
       inspectStaticMembers: false,
       maxArrayLength: 100,

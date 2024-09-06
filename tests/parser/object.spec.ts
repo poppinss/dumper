@@ -600,29 +600,30 @@ test.group('Parser | Object', () => {
           "type": "object-value-end",
         },
         {
+          "type": "prototype-start",
+        },
+        {
+          "type": "prototype-end",
+        },
+        {
           "type": "object-end",
         },
       ]
     `)
   })
 
-  test('ignore prototype members even with showHidden', ({ expect }) => {
+  test('ignore prototype members with showHidden', ({ expect }) => {
     const parser = new Parser({ showHidden: true })
-    class User {
-      id = 1
-      name = 'virk'
-      get username() {
-        return 'virk'
-      }
+    const user = {
+      id: 1,
+      name: 'virk',
     }
-
-    const user = new User()
     parser.parse(user)
 
     expect(parser.flush()).toMatchInlineSnapshot(`
       [
         {
-          "constructorName": "User",
+          "constructorName": "Object",
           "type": "object-start",
         },
         {
@@ -664,9 +665,9 @@ test.group('Parser | Object', () => {
     `)
   })
 
-  test('parse prototype members using inspectObjectPrototype', ({ expect }) => {
+  test('parse class prototype members using "unless-plain-object"', ({ expect }) => {
     const parser = new Parser({
-      inspectObjectPrototype: true,
+      inspectObjectPrototype: 'unless-plain-object',
     })
     class User {
       id = 1
@@ -753,6 +754,162 @@ test.group('Parser | Object', () => {
         },
         {
           "type": "prototype-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
+
+  test('do not parse plain object prototype with "unless-plain-object" option', ({ expect }) => {
+    const parser = new Parser({
+      inspectObjectPrototype: 'unless-plain-object',
+    })
+
+    const user = {
+      id: 1,
+      name: 'virk',
+    }
+    parser.parse(user)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "Object",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "id",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "number",
+          "value": 1,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "name",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'virk'",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
+
+  test('parse plain object prototype when enabled inspectObjectPrototype', ({ expect }) => {
+    const parser = new Parser({
+      inspectObjectPrototype: true,
+    })
+
+    const user = {
+      id: 1,
+      name: 'virk',
+    }
+    parser.parse(user)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "Object",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "id",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "number",
+          "value": 1,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "name",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'virk'",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-start",
+        },
+        {
+          "type": "prototype-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
+
+  test('do not parse prototype of object with null prototype', ({ expect }) => {
+    const parser = new Parser({
+      inspectObjectPrototype: true,
+    })
+
+    const user = Object.create(null)
+    user.name = 'virk'
+    parser.parse(user)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": null,
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "name",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'virk'",
+        },
+        {
+          "type": "object-value-end",
         },
         {
           "type": "object-end",
