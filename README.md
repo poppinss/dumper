@@ -229,7 +229,7 @@ dump(values, {
 - `showHidden`: When set to true, the non-enumerable properties of an object will be processed. **Default: `false`**.
 - `depth`: The depth at which to stop parsing nested values. The depth is shared among all tree like data structures. For example: Objects,Arrays,Maps and Sets. **Default: `5`**.
 - `inspectObjectPrototype`: Inspect prototype properties of an object. The non-enumerable properties of prototype are included by default. **Default: `false`**.
-- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could be helpful for inspect prototype properties of extended arrays. **Default: `false`**.
+- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could be helpful for inspect prototype properties of extended arrays. **Default: `unless-plain-object`**. The `unless-plain-object` object value will inspect the prototype when the prototype of the value is not the global `Object`.
 - `inspectStaticMembers`: Inspect static members of a class. Even though functions and classes are technically same, this config only applies to functions defined using the `[class]` keyword. **Default: `false`**.
 - `maxArrayLength`: Maximum number of members to process for Arrays, Maps and Sets. **Default: `100`**.
 - `maxStringLength`: Maximum number of characters to display for a string. **Default: `1000`**.
