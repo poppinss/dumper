@@ -7,42 +7,45 @@
  * file that was distributed with this source code.
  */
 
-import { styleText } from 'node:util'
+import useColors from '@poppinss/colors'
+import supportsColor from 'supports-color'
 import type { ConsolePrinterStyles } from './types.js'
+
+const colors = supportsColor.stdout ? useColors.ansi() : useColors.silent()
 
 /**
  * Default styles to use for pretty printing to ANSI output
  */
 export const themes = {
   default: {
-    braces: (value) => styleText('yellow', value),
-    brackets: (value) => styleText('yellow', value),
-    number: (value) => styleText('yellow', value),
-    bigInt: (value) => styleText('yellow', styleText('bold', value)),
-    boolean: (value) => styleText('yellow', styleText('italic', value)),
-    string: (value) => styleText('green', value),
-    null: (value) => styleText('dim', value),
-    undefined: (value) => styleText('dim', value),
-    prototypeLabel: (value) => styleText('dim', value),
-    symbol: (value) => styleText('magenta', value),
-    regex: (value) => styleText('red', value),
-    date: (value) => styleText('magenta', value),
-    buffer: (value) => styleText('magenta', value),
-    functionLabel: (value) => styleText('cyan', styleText('italic', value)),
-    arrayLabel: (value) => styleText('cyan', styleText('underline', value)),
-    objectLabel: (value) => styleText('cyan', styleText('underline', value)),
-    mapLabel: (value) => styleText('cyan', value),
-    setLabel: (value) => styleText('cyan', value),
-    objectKey: (value) => styleText('blue', value),
-    objectKeyPrefix: (value) => styleText('dim', value),
-    classLabel: (value) => styleText('cyan', value),
-    weakSetLabel: (value) => styleText('cyan', value),
-    weakRefLabel: (value) => styleText('cyan', value),
-    weakMapLabel: (value) => styleText('cyan', value),
-    observableLabel: (value) => styleText('cyan', value),
-    promiseLabel: (value) => styleText('blue', value),
-    generatorLabel: (value) => styleText('cyan', value),
-    blobLabel: (value) => styleText('magenta', value),
-    unknownLabel: (value) => styleText('magenta', value),
+    braces: (value) => colors.yellow(value),
+    brackets: (value) => colors.yellow(value),
+    number: (value) => colors.yellow(value),
+    bigInt: (value) => colors.yellow().bold(value),
+    boolean: (value) => colors.yellow().italic(value),
+    string: (value) => colors.green(value),
+    null: (value) => colors.dim(value),
+    undefined: (value) => colors.dim(value),
+    prototypeLabel: (value) => colors.dim(value),
+    symbol: (value) => colors.magenta(value),
+    regex: (value) => colors.red(value),
+    date: (value) => colors.magenta(value),
+    buffer: (value) => colors.magenta(value),
+    functionLabel: (value) => colors.cyan().italic(value),
+    arrayLabel: (value) => colors.cyan().underline(value),
+    objectLabel: (value) => colors.cyan().underline(value),
+    mapLabel: (value) => colors.cyan(value),
+    setLabel: (value) => colors.cyan(value),
+    objectKey: (value) => colors.blue(value),
+    objectKeyPrefix: (value) => colors.dim(value),
+    classLabel: (value) => colors.cyan(value),
+    weakSetLabel: (value) => colors.cyan(value),
+    weakRefLabel: (value) => colors.cyan(value),
+    weakMapLabel: (value) => colors.cyan(value),
+    observableLabel: (value) => colors.cyan(value),
+    promiseLabel: (value) => colors.blue(value),
+    generatorLabel: (value) => colors.cyan(value),
+    blobLabel: (value) => colors.magenta(value),
+    unknownLabel: (value) => colors.magenta(value),
   },
 } satisfies Record<string, ConsolePrinterStyles>
