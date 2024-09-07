@@ -4,6 +4,12 @@
   "description": "Pretty print JavaScript data types in the terminal and the browser",
   "main": "build/index.js",
   "type": "module",
+  "files": [
+    "build",
+    "!build/bin",
+    "!build/examples",
+    "!build/tests"
+  ],
   "scripts": {
     "pretest": "npm run lint",
     "test": "npm run quick:test",
