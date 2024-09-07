@@ -10,8 +10,10 @@
 import is from '@sindresorhus/is'
 import type { Parser } from './parser.js'
 
-const ObjectPrototype = Reflect.ownKeys(Object.prototype)
-const ArrayPrototye = Reflect.ownKeys(Array.prototype)
+const ObjectPrototype = Object.prototype
+const ArrayPrototype = Array.prototype
+const ObjectPrototypeKeys = Reflect.ownKeys(ObjectPrototype)
+const ArrayPrototypeKeys = Reflect.ownKeys(ArrayPrototype)
 
 /**
  * Helper to tokenize an object and its prototype
@@ -133,9 +135,14 @@ export function tokenizeObject(
    * not count against the depth.
    */
   if (config.inspectObjectPrototype === true) {
-    tokenizePrototype(value, parser, { membersToIgnore: ObjectPrototype })
+    tokenizePrototype(value, parser, {
+      membersToIgnore: ObjectPrototypeKeys,
+    })
   } else if (config.inspectObjectPrototype === 'unless-plain-object' && !is.plainObject(value)) {
-    tokenizePrototype(value, parser, { membersToIgnore: ObjectPrototype })
+    tokenizePrototype(value, parser, {
+      membersToIgnore: ObjectPrototypeKeys,
+      prototypeToIgnore: ObjectPrototype,
+    })
   }
 
   parser.collect({ type: 'object-end' })
@@ -155,81 +162,91 @@ export function tokenizePrototype(
   value: any,
   parser: Parser,
   config: {
+    prototypeToIgnore?: any
     membersToIgnore?: (string | symbol)[]
     eagerGetters?: (string | symbol)[]
   }
 ) {
-  const objectPrototype = Object.getPrototypeOf(value)
-  if (!objectPrototype) {
+  const prototypeChain: { proto: any; keys: (string | symbol)[] }[] = []
+
+  /**
+   * Looping through the entire prototype chain and collecting
+   * all the keys
+   */
+  for (
+    let proto = Object.getPrototypeOf(value);
+    proto && (!config.prototypeToIgnore || proto !== config.prototypeToIgnore);
+    proto = Object.getPrototypeOf(proto)
+  ) {
+    let keys = Reflect.ownKeys(proto)
+
+    /**
+     * Remove keys when membersToIgnore properties are defined
+     */
+    if (config.membersToIgnore) {
+      const keysSet = new Set([...keys])
+      config.membersToIgnore.forEach((m) => keysSet.delete(m))
+      keys = Array.from(keysSet)
+    }
+
+    prototypeChain.push({ proto, keys })
+  }
+
+  if (!prototypeChain.length) {
     return
   }
 
-  const ownKeys = Reflect.ownKeys(objectPrototype)
   const eagerGetters = config.eagerGetters ?? []
-
-  /**
-   * Create a final collection of keys.
-   *
-   * When we have membersToIgnore, we will delete those members
-   * from final keys set.
-   */
-  let keys: (string | symbol)[] = []
-  if (config.membersToIgnore) {
-    const keysSet = new Set([...ownKeys])
-    config.membersToIgnore.forEach((m) => keysSet.delete(m))
-    keys = Array.from(keysSet)
-  } else {
-    keys = ownKeys
-  }
-
   parser.collect({ type: 'prototype-start' })
 
   /**
    * Looping over own keys (including non-enumerable)
    */
-  for (let key of keys) {
-    /**
-     * Ignore constructor
-     */
-    if (key === 'constructor') {
-      continue
+  for (let proto of prototypeChain) {
+    for (let key of proto.keys) {
+      /**
+       * Ignore constructor
+       */
+      if (key === 'constructor') {
+        continue
+      }
+
+      /**
+       * Ensure property is known
+       */
+      const descriptor = Object.getOwnPropertyDescriptor(proto.proto, key)
+      if (!descriptor) {
+        continue
+      }
+
+      /**
+       * Collect key with its meta-data
+       */
+      const isSymbol = typeof key === 'symbol'
+      const isWritable = !!descriptor.set || !!descriptor.writable
+      parser.collect({
+        type: 'object-key',
+        isSymbol,
+        isWritable,
+        value: String(key),
+      })
+
+      /**
+       * Avoiding accessing getters to prevent
+       * side-effects
+       */
+      if ('get' in descriptor && !eagerGetters.includes(key)) {
+        parser.collect({ type: 'object-value-getter' })
+        continue
+      }
+
+      /**
+       * Inspect value
+       */
+      parser.collect({ type: 'object-value-start' })
+      parser.parse(value[key])
+      parser.collect({ type: 'object-value-end' })
     }
-
-    /**
-     * Ensure property is known
-     */
-    const descriptor = Object.getOwnPropertyDescriptor(objectPrototype, key)
-    if (!descriptor) {
-      continue
-    }
-
-    /**
-     * Collect key with its meta-data
-     */
-    const isSymbol = typeof key === 'symbol'
-    const isWritable = !!descriptor.set || !!descriptor.writable
-    parser.collect({
-      type: 'object-key',
-      isSymbol,
-      isWritable,
-      value: String(key),
-    })
-
-    /**
-     * Avoiding accessing getters to prevent
-     * side-effects
-     */
-    if ('get' in descriptor && !eagerGetters.includes(key)) {
-      parser.collect({ type: 'object-value-getter' })
-      continue
-    }
-
-    /**
-     * Inspect value
-     */
-    parser.collect({ type: 'object-value-start' })
-    parser.parse(value[key])
-    parser.collect({ type: 'object-value-end' })
   }
 
   parser.collect({ type: 'prototype-end' })
@@ -307,7 +324,8 @@ export function tokenizeArray(
    */
   if (config.inspectArrayPrototype) {
     tokenizePrototype(values, parser, {
-      membersToIgnore: ArrayPrototye,
+      membersToIgnore: ArrayPrototypeKeys,
+      prototypeToIgnore: ArrayPrototype,
     })
   }
 

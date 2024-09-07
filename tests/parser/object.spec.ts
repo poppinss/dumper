@@ -1357,4 +1357,290 @@ test.group('Parser | Object', () => {
       ]
     `)
   })
+
+  test('inspect parent prototype properties with "unless-plain-object" option', ({ expect }) => {
+    const parser = new Parser({
+      inspectObjectPrototype: 'unless-plain-object',
+    })
+    class BaseModel {
+      related() {}
+    }
+
+    class UserWithAuth extends BaseModel {
+      verifyCredentials() {}
+    }
+
+    class User extends UserWithAuth {
+      id = 1
+      name = 'virk'
+      get username() {
+        return 'virk'
+      }
+      foo() {
+        return 'a'
+      }
+    }
+
+    const user = new User()
+    parser.parse(user)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "User",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "id",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "number",
+          "value": 1,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "name",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'virk'",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": false,
+          "type": "object-key",
+          "value": "username",
+        },
+        {
+          "type": "object-value-getter",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "foo",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "foo",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "verifyCredentials",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "verifyCredentials",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "related",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "related",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
+
+  test('inspect parent prototype properties when enabled inspectObjectPrototype', ({ expect }) => {
+    const parser = new Parser({
+      inspectObjectPrototype: true,
+    })
+    class BaseModel {
+      related() {}
+    }
+
+    class UserWithAuth extends BaseModel {
+      verifyCredentials() {}
+    }
+
+    class User extends UserWithAuth {
+      id = 1
+      name = 'virk'
+      get username() {
+        return 'virk'
+      }
+      foo() {
+        return 'a'
+      }
+    }
+
+    const user = new User()
+    parser.parse(user)
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "User",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "id",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "number",
+          "value": 1,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "name",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'virk'",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": false,
+          "type": "object-key",
+          "value": "username",
+        },
+        {
+          "type": "object-value-getter",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "foo",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "foo",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "verifyCredentials",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "verifyCredentials",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "related",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "isAsync": false,
+          "isClass": false,
+          "isGenerator": false,
+          "name": "related",
+          "type": "function",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "prototype-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
 })
