@@ -185,6 +185,7 @@ export const tokenizers: Partial<Record<TypeName, Tokenizer>> = {
         showHidden: true,
         depth: parser.config.depth,
         inspectObjectPrototype: false,
+        collapse: parser.config.collapse,
         membersToIgnore: ['prototype', 'name', 'length'],
       })
 

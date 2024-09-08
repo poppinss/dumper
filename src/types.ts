@@ -199,6 +199,24 @@ export type TokensMap = {
   'generator': {
     isAsync: boolean
   }
+
+  /**
+   * Collapse token represents a value that has been
+   * collpased and its children are not further
+   * processed.
+   *
+   * Only objects and arrays can be collapsed
+   */
+  'collapse': {
+    name: string
+    token:
+      | ({
+          type: 'object-start'
+        } & TokensMap['object-start'])
+      | ({
+          type: 'array-start'
+        } & TokensMap['array-start'])
+  }
 }
 
 /**
@@ -272,4 +290,10 @@ export type ParserConfig = {
    * Defaults to 1000
    */
   maxStringLength?: number
+
+  /**
+   * An array of values that must be collapsed. The objects and
+   * arrays constructor names are checked against these values.
+   */
+  collapse?: string[]
 }

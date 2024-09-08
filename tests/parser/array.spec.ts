@@ -582,4 +582,48 @@ test.group('Parser | Array', () => {
       ]
     `)
   })
+
+  test('collapse values by their constructor name', ({ expect }) => {
+    const parser = new Parser({
+      collapse: ['Collection'],
+    })
+    class Collection extends Array {}
+
+    parser.parse({
+      users: new Collection(),
+    })
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "Object",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "users",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "name": "Collection",
+          "token": {
+            "name": "Collection",
+            "size": 0,
+            "type": "array-start",
+          },
+          "type": "collapse",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
 })

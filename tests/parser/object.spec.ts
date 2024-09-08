@@ -1643,4 +1643,219 @@ test.group('Parser | Object', () => {
       ]
     `)
   })
+
+  test('collapse values by their constructor name', ({ expect }) => {
+    const parser = new Parser({
+      collapse: ['User'],
+    })
+    const date = new Date('2024-10-20')
+    const adminWorkspace = Symbol.for('admin')
+
+    class User {
+      id = 1
+    }
+
+    parser.parse({
+      id: BigInt(1),
+      username: 'foo',
+      user: new User(),
+      age: 19,
+      isAdmin: true,
+      createdAt: date,
+      updatedAt: null,
+      regex: /[A-Z]+/g,
+      deletedAt: null,
+      auditedAt: undefined,
+      [adminWorkspace]: adminWorkspace,
+    })
+
+    expect(parser.flush()).toMatchInlineSnapshot(`
+      [
+        {
+          "constructorName": "Object",
+          "type": "object-start",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "id",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "bigInt",
+          "value": "1n",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "username",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "string",
+          "value": "'foo'",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "user",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "name": "User",
+          "token": {
+            "constructorName": "User",
+            "type": "object-start",
+          },
+          "type": "collapse",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "age",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "number",
+          "value": 19,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "isAdmin",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "boolean",
+          "value": true,
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "createdAt",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "date",
+          "value": "2024-10-20T00:00:00.000Z",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "updatedAt",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "null",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "regex",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "regexp",
+          "value": "/[A-Z]+/g",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "deletedAt",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "null",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": false,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "auditedAt",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "undefined",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "isSymbol": true,
+          "isWritable": true,
+          "type": "object-key",
+          "value": "Symbol(admin)",
+        },
+        {
+          "type": "object-value-start",
+        },
+        {
+          "type": "symbol",
+          "value": "Symbol(admin)",
+        },
+        {
+          "type": "object-value-end",
+        },
+        {
+          "type": "object-end",
+        },
+      ]
+    `)
+  })
 })

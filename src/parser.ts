@@ -55,6 +55,7 @@ export class Parser {
       inspectStaticMembers: false,
       maxArrayLength: 100,
       maxStringLength: 1000,
+      collapse: [],
       ...config,
     })
   }

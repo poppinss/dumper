@@ -24,6 +24,7 @@ export function tokenizeObject(
   config: {
     depth: number
     showHidden: boolean
+    collapse: string[]
     inspectObjectPrototype: boolean | 'unless-plain-object'
     constructorName?: string
     membersToIgnore?: (string | symbol)[]
@@ -47,13 +48,8 @@ export function tokenizeObject(
   }
 
   /**
-   * Track seen object and increment depth
-   */
-  parser.context.depth++
-  parser.context.objectsSeen.add(value)
-
-  /**
-   * Keep reference of the config properties
+   * Keep reference of the config properties to avoid
+   * property access inside the for loop
    */
   const showHidden = config.showHidden
 
@@ -61,8 +57,31 @@ export function tokenizeObject(
    * Grab metadata of the object.
    */
   const name = config.constructorName ?? Object.getPrototypeOf(value)?.constructor.name ?? null
+
+  /**
+   * Do not inspect children when constructor of the
+   * object is meant to be collapsed.
+   */
+  if (config.collapse.includes(name)) {
+    parser.collect({
+      type: 'collapse',
+      name: name,
+      token: {
+        type: 'object-start',
+        constructorName: name,
+      },
+    })
+    return
+  }
+
   const ownKeys = Reflect.ownKeys(value)
   const eagerGetters = config.eagerGetters ?? []
+
+  /**
+   * Track seen object and increment depth
+   */
+  parser.context.depth++
+  parser.context.objectsSeen.add(value)
 
   /**
    * Create a final collection of keys.
@@ -272,6 +291,7 @@ export function tokenizeArray(
   config: {
     name?: string
     depth: number
+    collapse: string[]
     inspectArrayPrototype: boolean
     maxArrayLength: number
   }
@@ -292,15 +312,33 @@ export function tokenizeArray(
     return
   }
 
+  const limit = config.maxArrayLength
+  const size = values.length
+  const name = config.name || values.constructor.name
+
+  /**
+   * Do not inspect children when constructor of the
+   * array is meant to be collapsed.
+   */
+  if (config.collapse.includes(name)) {
+    parser.collect({
+      type: 'collapse',
+      name: name,
+      token: {
+        type: 'array-start',
+        name,
+        size,
+      },
+    })
+    return
+  }
+
   /**
    * Track seen array and increment depth
    */
   parser.context.depth++
   parser.context.arraysSeen.add(values)
 
-  const limit = config.maxArrayLength
-  const size = values.length
-  const name = config.name || values.constructor.name
   parser.collect({ type: 'array-start', name, size })
 
   for (let index = 0; index < size; index++) {
