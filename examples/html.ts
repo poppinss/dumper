@@ -11,7 +11,8 @@ import { createScript, createStyleSheet, dump, themes } from '../formatters/html
 import { obj } from './values.js'
 
 const html = dump(obj, {
-  styles: themes.catppuccin,
+  styles: themes.nightOwl,
+  collapse: ['DateTime'],
 })
 
 const output = `<!DOCTYPE html>

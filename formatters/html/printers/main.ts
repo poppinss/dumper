@@ -30,6 +30,21 @@ function closingBrackets(formatter: HTMLFormatter) {
  * HTML printers to pretty print parser tokens
  */
 export const HTMLPrinters: TokenPrinters = {
+  'collapse': (token, formatter) => {
+    const styles =
+      token.token.type === 'object-start'
+        ? formatter.styles.objectLabel
+        : formatter.styles.arrayLabel
+
+    const collpaseStyles = formatter.styles.collapseLabel
+    return (
+      `<span style="${styles}">${token.name}</span> ` +
+      (token.token.type === 'object-start' ? openingBrace(formatter) : openingBrackets(formatter)) +
+      ` <span style="${collpaseStyles}">collapsed</span> ` +
+      (token.token.type === 'object-start' ? closingBrace(formatter) : closingBrackets(formatter))
+    )
+  },
+
   'object-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.objectLabel
@@ -90,8 +105,8 @@ export const HTMLPrinters: TokenPrinters = {
   },
 
   'object-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.objectLabel
-    return `<span style="${styles}">[Object *Circular]</span>`
+    const styles = formatter.styles.circularLabel
+    return `<span style="${styles}">[*Circular]</span>`
   },
 
   'object-max-depth-ref': (_, formatter) => {
@@ -100,8 +115,8 @@ export const HTMLPrinters: TokenPrinters = {
   },
 
   'object-value-getter': (_, formatter) => {
-    const styles = formatter.styles.objectLabel
-    return `<span style="${styles}">[Object Getter]</span>`
+    const styles = formatter.styles.getterLabel
+    return `<span style="${styles}">[Getter]</span>`
   },
 
   'object-value-start': () => {
@@ -156,8 +171,8 @@ export const HTMLPrinters: TokenPrinters = {
   },
 
   'array-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.arrayLabel
-    return `<span style="${styles}">[Array *Circular]</span>`
+    const styles = formatter.styles.circularLabel
+    return `<span style="${styles}">[*Circular]</span>`
   },
 
   'array-max-depth-ref': (_, formatter) => {
@@ -262,9 +277,9 @@ export const HTMLPrinters: TokenPrinters = {
 
   'map-circular-ref': (_, formatter) => {
     const indent = `${formatter.newLine}${formatter.indentation.getSpaces()}`
-    const styles = formatter.styles.mapLabel
+    const styles = formatter.styles.circularLabel
 
-    return `${indent}<span style="${styles}">[Map *Circular]</span>`
+    return `${indent}<span style="${styles}">[*Circular]</span>`
   },
 
   'map-max-depth-ref': (_, formatter) => {
@@ -318,9 +333,8 @@ export const HTMLPrinters: TokenPrinters = {
   },
 
   'set-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.setLabel
-
-    return `<span style="${styles}">[Set *Circular]</span>`
+    const styles = formatter.styles.circularLabel
+    return `<span style="${styles}">[*Circular]</span>`
   },
 
   'set-max-depth-ref': (_, formatter) => {

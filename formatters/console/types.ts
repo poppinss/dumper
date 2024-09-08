@@ -83,6 +83,9 @@ export type ConsolePrinterStyles = {
    */
   setLabel: (value: string) => string
 
+  collapseLabel: (value: string) => string
+  circularLabel: (value: string) => string
+  getterLabel: (value: string) => string
   weakSetLabel: (value: string) => string
   weakRefLabel: (value: string) => string
   weakMapLabel: (value: string) => string

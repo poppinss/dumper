@@ -28,6 +28,21 @@ function closingBrackets(formatter: ConsoleFormatter) {
  * Console printers to pretty print parser tokens
  */
 export const ConsolePrinters: TokenPrinters = {
+  'collapse': (token, formatter) => {
+    const styles =
+      token.token.type === 'object-start'
+        ? formatter.styles.objectLabel
+        : formatter.styles.arrayLabel
+
+    const collpaseStyles = formatter.styles.collapseLabel
+    return (
+      `${styles(token.name)} ` +
+      (token.token.type === 'object-start' ? openingBrace(formatter) : openingBrackets(formatter)) +
+      ` ${collpaseStyles('collpased')} ` +
+      (token.token.type === 'object-start' ? closingBrace(formatter) : closingBrackets(formatter))
+    )
+  },
+
   'object-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.objectLabel
@@ -72,8 +87,8 @@ export const ConsolePrinters: TokenPrinters = {
   },
 
   'object-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.objectLabel
-    return styles('[Object *Circular]')
+    const styles = formatter.styles.circularLabel
+    return styles('[*Circular]')
   },
 
   'object-max-depth-ref': (_, formatter) => {
@@ -82,8 +97,8 @@ export const ConsolePrinters: TokenPrinters = {
   },
 
   'object-value-getter': (_, formatter) => {
-    const styles = formatter.styles.objectLabel
-    return styles('[Object Getter]')
+    const styles = formatter.styles.getterLabel
+    return styles('[Getter]')
   },
 
   'object-value-start': () => {
@@ -124,8 +139,8 @@ export const ConsolePrinters: TokenPrinters = {
   },
 
   'array-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.arrayLabel
-    return styles('[Array *Circular]')
+    const styles = formatter.styles.circularLabel
+    return styles('[*Circular]')
   },
 
   'array-max-depth-ref': (_, formatter) => {
@@ -210,8 +225,8 @@ export const ConsolePrinters: TokenPrinters = {
   },
 
   'map-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.mapLabel
-    return styles('[Map *Circular]')
+    const styles = formatter.styles.circularLabel
+    return styles('[*Circular]')
   },
 
   'map-max-depth-ref': (_, formatter) => {
@@ -254,8 +269,8 @@ export const ConsolePrinters: TokenPrinters = {
   },
 
   'set-circular-ref': (_, formatter) => {
-    const styles = formatter.styles.setLabel
-    return styles('[Set *Circular]')
+    const styles = formatter.styles.circularLabel
+    return styles('[*Circular]')
   },
 
   'set-max-depth-ref': (_, formatter) => {

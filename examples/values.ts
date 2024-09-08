@@ -7,10 +7,14 @@
  * file that was distributed with this source code.
  */
 
+import { DateTime } from 'luxon'
+
 const fooSymbol = Symbol.for('foo')
 const blob = new Blob(['hello'])
 
 class User {
+  createdAt = DateTime.local()
+
   constructor() {
     Object.defineProperty(this, 'bar', {
       get() {

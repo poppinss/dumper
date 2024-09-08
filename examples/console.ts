@@ -13,5 +13,6 @@ import { obj } from './values.js'
 console.log(
   dump(obj, {
     styles: themes.default,
+    collapse: ['DateTime'],
   })
 )

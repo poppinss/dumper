@@ -84,6 +84,9 @@ export type HTMLPrinterStyles = {
    */
   setLabel: string
 
+  collapseLabel: string
+  circularLabel: string
+  getterLabel: string
   weakSetLabel: string
   weakRefLabel: string
   weakMapLabel: string
