@@ -47,7 +47,8 @@ export const ConsolePrinters: TokenPrinters = {
     formatter.indentation.increment()
     const styles = formatter.styles.objectLabel
     const label =
-      formatter.context.isStaticMember || token.constructorName === 'Object'
+      (formatter.context.isStaticMember && formatter.context.staticDepth === 0) ||
+      token.constructorName === 'Object'
         ? ''
         : styles(`${token.constructorName || 'Object [null]'}`) + ' '
 
@@ -79,8 +80,11 @@ export const ConsolePrinters: TokenPrinters = {
      */
     let prefix = ''
     if (formatter.context.isStaticMember) {
-      const prefixStyles = formatter.styles.objectKeyPrefix
-      prefix = `${prefixStyles('static')} `
+      formatter.context.staticDepth++
+      if (formatter.context.staticDepth === 1) {
+        const prefixStyles = formatter.styles.objectKeyPrefix
+        prefix = `${prefixStyles('static')} `
+      }
     }
 
     return indent + prefix + styles(value) + ': '
@@ -105,7 +109,10 @@ export const ConsolePrinters: TokenPrinters = {
     return ''
   },
 
-  'object-value-end': () => {
+  'object-value-end': (_, formatter) => {
+    if (formatter.context.isStaticMember) {
+      formatter.context.staticDepth--
+    }
     return `,`
   },
 
@@ -179,7 +186,7 @@ export const ConsolePrinters: TokenPrinters = {
   'map-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.mapLabel
-    const label = `Map:${token.size} `
+    const label = `Map(${token.size}) `
 
     return styles(label) + openingBrace(formatter)
   },
@@ -248,7 +255,7 @@ export const ConsolePrinters: TokenPrinters = {
   'set-start': (token, formatter) => {
     formatter.indentation.increment()
     const styles = formatter.styles.setLabel
-    const label = `Set:${token.size} `
+    const label = `Set(${token.size}) `
 
     return styles(label) + openingBrackets(formatter)
   },
@@ -432,11 +439,13 @@ export const ConsolePrinters: TokenPrinters = {
 
   'static-members-start': function (_, formatter): string {
     formatter.context.isStaticMember = true
-    return ''
+    formatter.context.staticDepth = 0
+    return ' '
   },
 
   'static-members-end': function (_, formatter): string {
     formatter.context.isStaticMember = false
+    formatter.context.staticDepth = 0
     return ''
   },
 }

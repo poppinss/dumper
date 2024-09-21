@@ -49,9 +49,10 @@ export const HTMLPrinters: TokenPrinters = {
     formatter.indentation.increment()
     const styles = formatter.styles.objectLabel
     const toggleStyles = formatter.styles.toggle
-    const label = formatter.context.isStaticMember
-      ? ' '
-      : `${token.constructorName || 'Object [null]'} `
+    const label =
+      formatter.context.isStaticMember && formatter.context.staticDepth === 0
+        ? ' '
+        : `${token.constructorName || 'Object [null]'} `
 
     return (
       '<span class="dumper-group dumper-object-group">' +
@@ -91,8 +92,12 @@ export const HTMLPrinters: TokenPrinters = {
      */
     let prefix = ''
     if (formatter.context.isStaticMember) {
-      const prefixStyles = formatter.styles.objectKeyPrefix
-      prefix = `<span class="dumper-object-prefix" style="${prefixStyles}">` + `static ` + '</span>'
+      formatter.context.staticDepth++
+      if (formatter.context.staticDepth === 1) {
+        const prefixStyles = formatter.styles.objectKeyPrefix
+        prefix =
+          `<span class="dumper-object-prefix" style="${prefixStyles}">` + `static ` + '</span>'
+      }
     }
 
     return (
@@ -123,7 +128,10 @@ export const HTMLPrinters: TokenPrinters = {
     return ''
   },
 
-  'object-value-end': () => {
+  'object-value-end': (_, formatter) => {
+    if (formatter.context.isStaticMember) {
+      formatter.context.staticDepth--
+    }
     return `,`
   },
 
@@ -504,11 +512,13 @@ export const HTMLPrinters: TokenPrinters = {
 
   'static-members-start': function (_, formatter): string {
     formatter.context.isStaticMember = true
+    formatter.context.staticDepth = 0
     return ''
   },
 
   'static-members-end': function (_, formatter): string {
     formatter.context.isStaticMember = false
+    formatter.context.staticDepth = 0
     return ''
   },
 }

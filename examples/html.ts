@@ -12,6 +12,7 @@ import { obj } from './values.js'
 
 const html = dump(obj, {
   styles: themes.nightOwl,
+  inspectStaticMembers: true,
   collapse: ['DateTime'],
 })
 

@@ -36,6 +36,13 @@ class User {
     return this.#attributes.username
   }
 
+  static keys = {
+    a: 1,
+    b: 2,
+  }
+
+  static attributes = new Map([['id', { name: 'id' }]])
+
   static booted = false
   static boot() {
     this.booted = true
