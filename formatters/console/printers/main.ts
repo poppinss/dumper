@@ -80,7 +80,7 @@ export const ConsolePrinters: TokenPrinters = {
     let prefix = ''
     if (formatter.context.isStaticMember) {
       const prefixStyles = formatter.styles.objectKeyPrefix
-      prefix = prefixStyles('static')
+      prefix = `${prefixStyles('static')} `
     }
 
     return indent + prefix + styles(value) + ': '
