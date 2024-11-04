@@ -122,4 +122,79 @@ export const themes = {
     blobLabel: 'color: #94e2d5;',
     unknownLabel: 'color: #94e2d5;',
   },
+  /**
+   * Following is the list of defined variables
+    --pre-bg-color
+    --pre-fg-color
+    --toggle-fg-color
+    --braces-fg-color
+    --brackets-fg-color
+    --dt-number-fg-color
+    --dt-bigint-fg-color
+    --dt-boolean-fg-color
+    --dt-string-fg-color
+    --dt-null-fg-color
+    --dt-undefined-fg-color
+    --prototype-label-fg-color
+    --dt-symbol-fg-color
+    --dt-regex-fg-color
+    --dt-date-fg-color
+    --dt-buffer-fg-color
+    --function-label-fg-color
+    --array-label-fg-color
+    --object-label-fg-color
+    --map-label-fg-color
+    --set-label-fg-color
+    --object-key-fg-color
+    --object-key-prefix-fg-color
+    --class-label-fg-color
+    --collpase-label-fg-color
+    --getter-label-fg-color
+    --circular-label-fg-color
+    --weakset-label-fg-color
+    --weakref-label-fg-color
+    --weakmap-label-fg-color
+    --observable-label-fg-color
+    --promise-label-fg-color
+    --generator-label-fg-color
+    --blob-label-fg-color
+    --unknown-label-fg-color
+   */
+  cssVariables: {
+    pre: 'background-color: var(--pre-bg-color); color: var(--pre-fg-color);',
+    toggle: 'color: var(--toggle-fg-color); background: none; border: none;',
+    braces: 'color: var(--braces-fg-color);',
+    brackets: 'color: var(--brackets-fg-color);',
+    number: 'color: var(--dt-number-fg-color);',
+    bigInt: 'color: var(--dt-bigint-fg-color); font-weight: bold;',
+    boolean: 'color: var(--dt-boolean-fg-color); font-style: italic;',
+    string: 'color: var(--dt-string-fg-color);',
+    null: 'color: var(--dt-null-fg-color);',
+    undefined: 'color: var(--dt-undefined-fg-color);',
+    prototypeLabel: 'color: var(--prototype-label-fg-color);',
+    symbol: 'color: var(--dt-symbol-fg-color);',
+    regex: 'color: var(--dt-regex-fg-color);',
+    date: 'color: var(--dt-date-fg-color);',
+    buffer: 'color: var(--dt-buffer-fg-color);',
+    functionLabel: 'color: var(--function-label-fg-color);',
+    arrayLabel: 'color: var(--array-label-fg-color);',
+    objectLabel: 'color: var(--object-label-fg-color);',
+    mapLabel: 'color: var(--map-label-fg-color);',
+    setLabel: 'color: var(--set-label-fg-color);',
+    objectKey: 'color: var(--object-key-fg-color);',
+    objectKeyPrefix:
+      'color: var(--object-key-prefix-fg-color); font-style: italic; font-weight: bold',
+    classLabel: 'color: var(--class-label-fg-color);',
+    collapseLabel: 'color: var(--collpase-label-fg-color); font-style: italic;',
+    getterLabel: 'color: var(--getter-label-fg-color);',
+    circularLabel: 'color: var(--circular-label-fg-color);',
+    weakSetLabel: 'color: var(--weakset-label-fg-color);',
+    weakRefLabel: 'color: var(--weakref-label-fg-color);',
+    weakMapLabel: 'color: var(--weakmap-label-fg-color);',
+    observableLabel: 'color: var(--observable-label-fg-color);',
+    promiseLabel: 'color: var(--promise-label-fg-color);',
+    generatorLabel: 'color: var(--generator-label-fg-color);',
+    blobLabel: 'color: var(--blob-label-fg-color);',
+    unknownLabel: 'color: var(--unknown-label-fg-color);',
+  },
 } satisfies Record<string, HTMLPrinterStyles>
