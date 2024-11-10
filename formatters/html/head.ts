@@ -62,7 +62,13 @@ function collapseGroup(group) {
   samp.setAttribute('hidden', 'true')
 }
 
-function dumperActivate(dumpId) {
+function dumperActivate(dumpId, expand) {
+  if (expand === true) {
+    expandGroup(document.querySelector(\`#$\{dumpId} .dumper-group\`))
+  } else if (expand === 'all') {
+    document.querySelectorAll(\`#$\{dumpId} .dumper-group\`).forEach((c) => expandGroup(c))
+  }
+
   document.querySelectorAll(\`#$\{dumpId} .dumper-toggle\`).forEach((trigger) => {
     trigger.addEventListener('click', function (event) {
       const target = event.currentTarget

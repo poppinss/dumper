@@ -102,12 +102,13 @@ export class HTMLFormatter {
    */
   #wrapOutput(code: string) {
     const id = `dump-${nanoid()}`
+    const expand = this.#config.expand === 'all' ? `'all'` : this.#config.expand
     const nonce = this.#config.cspNonce ? ` nonce="${this.#config.cspNonce}"` : ''
 
     return (
       `<div id="${id}" class="dumper-dump">` +
       `<pre style="${this.styles.pre}"><code>${code}</code></pre>` +
-      `<script${nonce}>dumperActivate('${id}')</script>` +
+      `<script${nonce}>dumperActivate('${id}', ${expand})</script>` +
       '</div>'
     )
   }

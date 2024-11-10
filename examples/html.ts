@@ -14,6 +14,7 @@ const html = dump(obj, {
   styles: themes.nightOwl,
   inspectStaticMembers: true,
   collapse: ['DateTime'],
+  expand: 'all',
 })
 
 const output = `<!DOCTYPE html>
