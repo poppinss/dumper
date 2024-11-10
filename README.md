@@ -2,12 +2,12 @@
 
 > Pretty print JavaScript data types in the terminal and the browser
 
-Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options) but it provides more control over the output. You can use Dumper to generate [HTML output](#html-formatter), [CLI output](#cli-formatter), or use its [low-level API](#using-parser-directly) to create inspection tokens and render them using a custom formatter.
+Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options), but it provides more control over the output. You can use Dumper to generate [HTML output](#html-formatter), [CLI output](#cli-formatter), or use its [low-level API](#using-parser-directly) to create inspection tokens and render them using a custom formatter.
 
 ![](./dumper-example.png)
 
 > [!IMPORTANT]
-> Dumper is a low-level utility and you may have to write a wrapper around it for the framework of your choice.
+> Dumper is a low-level utility. You may have to write a wrapper around it for the framework of your choice.
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm i @poppinss/dumper
 
 ## HTML formatter
 
-You can dump values to HTML output using the `dump` helper from the html sub-module. For example:
+You can dump values to HTML output using the `dump` helper from the HTML sub-module. For example:
 
 ```ts
 import { dump } from '@poppinss/dumper/html'
@@ -76,6 +76,7 @@ You may pass all of the [Parser options](#parser-options) alongside the followin
 
 - `styles`: The styles property is a key-value pair that contains CSS properties to style HTML elements. You can either define custom styles or use one of the pre-existing themes as a reference.
 - `cspNonce`: If your application has CSP enabled, then you must define the [CSP nonce](https://content-security-policy.com/nonce/) for the inline `script` tag output alongside the `pre` tag.
+- `expand`: Render the dumped output expanded (instead of collapsed). By default, only the first level is expanded. However, you can expand recursively using the `expand: 'all'` option.
 
 Following is an example of using a pre-existing theme.
 
@@ -84,6 +85,72 @@ import { dump, themes } from '@poppinss/dumper/html'
 
 dump(value, {
   styles: themes.catppuccin,
+})
+```
+
+To have support for dark and light modes, you must use the `cssVariables` theme and define the colors using CSS variables. For example:
+
+```ts
+import { dump, themes } from '@poppinss/dumper/html'
+
+dump(value, {
+  styles: themes.cssVariables,
+})
+```
+
+**List of CSS variables**
+
+```css
+:root {
+  --pre-bg-color
+  --pre-fg-color
+  --toggle-fg-color
+  --braces-fg-color
+  --brackets-fg-color
+  --dt-number-fg-color
+  --dt-bigint-fg-color
+  --dt-boolean-fg-color
+  --dt-string-fg-color
+  --dt-null-fg-color
+  --dt-undefined-fg-color
+  --prototype-label-fg-color
+  --dt-symbol-fg-color
+  --dt-regex-fg-color
+  --dt-date-fg-color
+  --dt-buffer-fg-color
+  --function-label-fg-color
+  --array-label-fg-color
+  --object-label-fg-color
+  --map-label-fg-color
+  --set-label-fg-color
+  --object-key-fg-color
+  --object-key-prefix-fg-color
+  --class-label-fg-color
+  --collpase-label-fg-color
+  --getter-label-fg-color
+  --circular-label-fg-color
+  --weakset-label-fg-color
+  --weakref-label-fg-color
+  --weakmap-label-fg-color
+  --observable-label-fg-color
+  --promise-label-fg-color
+  --generator-label-fg-color
+  --blob-label-fg-color
+  --unknown-label-fg-color
+}
+```
+
+Following is an example of rendering the expanded output.
+
+```ts
+import { dump } from '@poppinss/dumper/html'
+
+dump(value, {
+  expand: true, // expand first-level
+})
+
+dump(value, {
+  expand: 'all', // expand recursively
 })
 ```
 
@@ -154,7 +221,7 @@ const myTheme: ConsolePrinterStyles = {
   number: (value) => styleText('yellow', value),
   bigInt: (value) => styleText('yellow', styleText('bold', value)),
   boolean: (value) => styleText('yellow', styleText('italic', value)),
-  // ... styles for rest of the tokens
+  // ... styles for the rest of the tokens
 }
 
 dump(value, {
@@ -210,7 +277,7 @@ Following is the list of data types supported by Dumper. All other data types wi
 
 ## Parser options
 
-Regardless of the output format, you can use one of the following options to tweak the parsing behaviour.
+Regardless of the output format, you can use one of the following options to tweak the parsing behavior.
 
 ```ts
 import { dump } from '@poppinss/dumper/console'
@@ -227,16 +294,16 @@ dump(values, {
 ```
 
 - `showHidden`: When set to true, the non-enumerable properties of an object will be processed. **Default: `false`**.
-- `depth`: The depth at which to stop parsing nested values. The depth is shared among all tree like data structures. For example: Objects,Arrays,Maps and Sets. **Default: `5`**.
-- `inspectObjectPrototype`: Inspect prototype properties of an object. The non-enumerable properties of prototype are included by default. **Default: `false`**.
-- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could be helpful for inspect prototype properties of extended arrays. **Default: `unless-plain-object`**. The `unless-plain-object` object value will inspect the prototype when the prototype of the value is not the global `Object`.
-- `inspectStaticMembers`: Inspect static members of a class. Even though functions and classes are technically same, this config only applies to functions defined using the `[class]` keyword. **Default: `false`**.
-- `maxArrayLength`: Maximum number of members to process for Arrays, Maps and Sets. **Default: `100`**.
+- `depth`: The depth at which to stop parsing nested values. The depth is shared among all tree-like data structures. For example: Objects, Arrays, Maps, and Sets. **Default: `5`**.
+- `inspectObjectPrototype`: Inspect prototype properties of an object. The non-enumerable properties of the prototype are included by default. **Default: `false`**.
+- `inspectArrayPrototype`: Inspect prototype properties of an Array. This flag could help inspect prototype properties of extended arrays. **Default: `unless-plain-object`**. The `unless-plain-object` object value will inspect the prototype when the prototype of the value is not the global `Object`.
+- `inspectStaticMembers`: Inspect static members of a class. Even though functions and classes are technically the same, this config only applies to functions defined using the `[class]` keyword. **Default: `false`**.
+- `maxArrayLength`: Maximum number of members to process for Arrays, Maps, and Sets. **Default: `100`**.
 - `maxStringLength`: Maximum number of characters to display for a string. **Default: `1000`**.
 
 ## Using Parser directly
 
-For advanced use-cases you may use the Parser directly and create a custom formatter on top of it. Following is an example of the same. Also, feel free to consult implementation of the existing formatters.
+For advanced use cases, use the Parser directly and create a custom formatter on top of it. Following is an example of the same. Also, feel free to consult the implementation of the existing formatters.
 
 ```ts
 import { Parser } from '@poppinss/dumper'
@@ -259,11 +326,11 @@ const tokens = parser.flush()
 console.log(tokens)
 ```
 
-The `parser.flush` method returns a flat array of [tokens](https://github.com/poppinss/dumper/blob/1.x/src/types.ts#L30) and they must be printed in the same order as they are defined.
+The `parser.flush` method returns a flat array of [tokens](https://github.com/poppinss/dumper/blob/1.x/src/types.ts#L30), and they must be printed in the same order as they are defined.
 
-The official implementations (shipped with dumper) uses the concept of printers, where we have defined one printer for each token type that is responsible for returning the formatted value.
+The official implementations (shipped with Dumper) use the concept of printers, where we have defined one printer for each token type that is responsible for returning the formatted value.
 
-Following is an oversimplified example of creating custom printers. Once again, feel free to reference implementation of existing [formatters](https://github.com/poppinss/dumper/blob/1.x/formatters/html/printers/formatter.ts) and [printers](https://github.com/poppinss/dumper/blob/1.x/formatters/html/printers/main.ts).
+Following is an oversimplified example of creating custom printers. Once again, feel free to reference the implementation of existing [formatters](https://github.com/poppinss/dumper/blob/1.x/formatters/html/printers/formatter.ts) and [printers](https://github.com/poppinss/dumper/blob/1.x/formatters/html/printers/main.ts).
 
 ```ts
 const myCustomPrinters: [K in keyof TokensMap]: (
