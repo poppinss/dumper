@@ -2,6 +2,10 @@
 
 > Pretty print JavaScript data types in the terminal and the browser
 
+<br />
+
+[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
+
 Dumper is similar to Node.js [util.inspect](https://nodejs.org/api/util.html#utilinspectobject-options), but it provides more control over the output. You can use Dumper to generate [HTML output](#html-formatter), [CLI output](#cli-formatter), or use its [low-level API](#using-parser-directly) to create inspection tokens and render them using a custom formatter.
 
 ![](./dumper-example.png)
@@ -358,3 +362,26 @@ const output = tokens.map((token) => {
   return myCustomPrinters[token.type](token)
 }).join('')
 ```
+
+## Contributing
+
+One of the primary goals of Poppinss is to have a vibrant community of users and contributors who believe in the principles of the framework.
+
+We encourage you to read the [contribution guide](https://github.com/poppinss/.github/blob/main/docs/CONTRIBUTING.md) before contributing to the framework.
+
+## Code of Conduct
+
+In order to ensure that the Poppinss community is welcoming to all, please review and abide by the [Code of Conduct](https://github.com/poppinss/.github/blob/main/docs/CODE_OF_CONDUCT.md).
+
+## License
+
+Poppinss dumper is open-sourced software licensed under the [MIT license](LICENSE.md).
+
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/poppinss/dumper/checks.yml?style=for-the-badge
+[gh-workflow-url]: https://github.com/poppinss/dumper/actions/workflows/checks.yml 'Github action'
+[typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
+[typescript-url]: "typescript"
+[npm-image]: https://img.shields.io/npm/v/@poppinss/dumper.svg?style=for-the-badge&logo=npm
+[npm-url]: https://npmjs.org/package/@poppinss/dumper 'npm'
+[license-image]: https://img.shields.io/npm/l/@poppinss/dumper?color=blueviolet&style=for-the-badge
+[license-url]: LICENSE.md 'license'
