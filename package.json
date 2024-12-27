@@ -48,7 +48,6 @@
     "eslint": "^9.17.0",
     "luxon": "^3.5.0",
     "prettier": "^3.4.2",
-    "pretty-format": "^29.7.0",
     "release-it": "^17.11.0",
     "rxjs": "^7.8.1",
     "ts-node-maintained": "^10.9.4",
