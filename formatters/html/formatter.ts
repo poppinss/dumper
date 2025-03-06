@@ -19,7 +19,15 @@ import type { HTMLFormatterConfig, HTMLPrinterStyles } from './types.js'
 const seed = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
 export let nanoid = (length = 15) => {
   let output = ''
-  const random = crypto.getRandomValues(new Uint8Array(length))
+  let random = new Uint8Array(length)
+  if (globalThis.crypto) {
+    crypto.getRandomValues(random)
+  } else {
+    for (let i = 0; i < length; i++) {
+      random[i] = Math.floor(Math.random() * 256)
+    }
+  }
+
   for (let n = 0; n < length; n++) {
     output += seed[63 & random[n]]
   }
