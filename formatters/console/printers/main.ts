@@ -8,7 +8,7 @@
  */
 
 import { wordWrap } from '../../../src/helpers.js'
-import { ConsoleFormatter } from '../formatter.js'
+import { type ConsoleFormatter } from '../formatter.js'
 import type { TokenPrinters } from '../types.js'
 
 function openingBrace(formatter: ConsoleFormatter) {

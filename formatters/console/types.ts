@@ -8,7 +8,7 @@
  */
 
 import type { ParserConfig, TokensMap } from '../../src/types.js'
-import { ConsoleFormatter } from './formatter.js'
+import { type ConsoleFormatter } from './formatter.js'
 
 /**
  * Styles to use for pretty printing parser tokens. The token

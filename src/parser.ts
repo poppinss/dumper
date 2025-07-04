@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import is, { TypeName } from '@sindresorhus/is'
+import is, { type TypeName } from '@sindresorhus/is'
 import { tokenizers } from './tokenizers/main.js'
 import type { ParserConfig, Token } from './types.js'
 

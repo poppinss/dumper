@@ -10,7 +10,7 @@
 import { inspect } from 'node:util'
 import is, { type TypeName } from '@sindresorhus/is'
 
-import { Parser } from '../parser.js'
+import { type Parser } from '../parser.js'
 import type { Tokenizer } from '../types.js'
 import { tokenizeArray, tokenizeObject } from '../helpers.js'
 

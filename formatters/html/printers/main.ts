@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { HTMLFormatter } from '../main.js'
+import { type HTMLFormatter } from '../main.js'
 import type { TokenPrinters } from '../types.js'
 import { htmlEscape, wordWrap } from '../../../src/helpers.js'
 
