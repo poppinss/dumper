@@ -9,7 +9,7 @@ export function createStyleSheet() {
 .dumper-dump pre {
   line-height: 24px;
   font-size: 15px;
-  overflow-x: scroll;
+  overflow-x: auto;
   position:relative;
   z-index:99999;
   padding: 10px 15px;
