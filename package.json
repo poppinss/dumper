@@ -1,6 +1,6 @@
 {
   "name": "@poppinss/dumper",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Pretty print JavaScript data types in the terminal and the browser",
   "main": "build/index.js",
   "type": "module",
