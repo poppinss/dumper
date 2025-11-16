@@ -1,6 +1,6 @@
 # @poppinss/dumper
 
-> Pretty print JavaScript data types in the terminal and the browser
+> Pretty print JavaScript data types and get ANSI or the HTML output
 
 <br />
 
