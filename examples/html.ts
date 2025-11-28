@@ -7,14 +7,14 @@
  * file that was distributed with this source code.
  */
 
-import { createScript, createStyleSheet, dump, themes } from '../formatters/html/main.js'
+import { createServer } from 'node:http'
+import { createScript, createStyleSheet, dump, themes } from '../formatters/html/main.ts'
 import { obj } from './values.js'
 
 const html = dump(obj, {
   styles: themes.nightOwl,
   inspectStaticMembers: true,
   collapse: ['DateTime'],
-  expand: 'all',
 })
 
 const output = `<!DOCTYPE html>
@@ -23,6 +23,11 @@ const output = `<!DOCTYPE html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <style>
+    button {
+      padding: 20px;
+      color: #fff;
+      background: #000;
+    }
     ${createStyleSheet()}
   </style>
   <script>
@@ -34,4 +39,8 @@ const output = `<!DOCTYPE html>
 </body>
 </html>`
 
-console.log(output)
+createServer((_, res) => {
+  res.setHeader('content-type', 'text/html')
+  res.write(output)
+  res.end()
+}).listen(3000)

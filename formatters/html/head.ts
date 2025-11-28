@@ -15,6 +15,14 @@ export function createStyleSheet() {
   padding: 10px 15px;
   margin: 0;
 }
+.dumper-dump pre code, .dumper-dump pre code span {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.dumper-toggle {
+  padding: 0 !important;
+}
 .dumper-dump pre samp {
   position: relative;
 }
